@@ -15,16 +15,12 @@ class World
         @by1 = 0
         @by2 = 1000
       else
-        if(obj instanceof World)
             @Players = obj.Players
             @name = obj.name
             @bx1 = obj.bx1
             @bx2 = obj.bx2
             @by1 = obj.by1
             @by2 = obj.by2
-        else throw "Wrong world constructor."
-
-
   AddPlayer : (pl) ->
     @Players[pl.name] = pl
   AddEnemy: (en)->

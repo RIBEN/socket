@@ -46,7 +46,7 @@
       <file leaf-file-name="client.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/client.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="34" selection-start="1046" selection-end="1046" vertical-scroll-proportion="0.16582064">
+            <state line="34" column="2" selection-start="1136" selection-end="1136" vertical-scroll-proportion="0.23011844">
               <folding />
             </state>
           </provider>
@@ -64,29 +64,16 @@
       <file leaf-file-name="model.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/model.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="34" selection-start="408" selection-end="408" vertical-scroll-proportion="0.0">
+            <state line="23" column="0" selection-start="513" selection-end="513" vertical-scroll-proportion="0.0">
               <folding>
-                <marker date="1367921206000" expanded="true" signature="1454:1817" placeholder="..." />
-                <marker date="1367921206000" expanded="true" signature="1489:1558" placeholder="..." />
-                <marker date="1367921206000" expanded="true" signature="1606:1673" placeholder="..." />
-                <marker date="1367921206000" expanded="true" signature="1724:1792" placeholder="..." />
-                <marker date="1367921206000" expanded="true" signature="2546:2581" placeholder="..." />
-                <marker date="1367921206000" expanded="true" signature="2582:2699" placeholder="..." />
-                <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
-                <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
+                <marker date="1367927742000" expanded="true" signature="1373:1736" placeholder="..." />
+                <marker date="1367927742000" expanded="false" signature="1408:1477" placeholder="..." />
+                <marker date="1367927742000" expanded="false" signature="1525:1592" placeholder="..." />
+                <marker date="1367927742000" expanded="false" signature="1643:1711" placeholder="..." />
+                <marker date="1367927742000" expanded="false" signature="2465:2500" placeholder="..." />
+                <marker date="1367927742000" expanded="true" signature="2501:2618" placeholder="..." />
+                <marker date="1367927742000" expanded="true" signature="2559:2594" placeholder="..." />
+                <marker date="1367927742000" expanded="false" signature="2559:2594" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -115,8 +102,8 @@
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/js/model.js" />
-        <option value="$PROJECT_DIR$/js/model.coffee" />
         <option value="$PROJECT_DIR$/server.coffee" />
+        <option value="$PROJECT_DIR$/js/model.coffee" />
         <option value="$PROJECT_DIR$/js/client.coffee" />
       </list>
     </option>
@@ -260,14 +247,14 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="settings" />
-    <property name="restartRequiresConfirmation" value="false" />
+    <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -502,16 +489,26 @@
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="0" selection-start="825" selection-end="825" vertical-scroll-proportion="0.33239436">
-          <folding />
-        </state>
+        <state line="57" column="0" selection-start="825" selection-end="825" vertical-scroll-proportion="0.33239436" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/model.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="22" selection-start="357" selection-end="357" vertical-scroll-proportion="0.5882353">
+        <state line="21" column="22" selection-start="357" selection-end="357" vertical-scroll-proportion="0.5882353" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/model.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="513" selection-end="513" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <marker date="1367927742000" expanded="true" signature="1373:1736" placeholder="..." />
+            <marker date="1367927742000" expanded="false" signature="1408:1477" placeholder="..." />
+            <marker date="1367927742000" expanded="false" signature="1525:1592" placeholder="..." />
+            <marker date="1367927742000" expanded="false" signature="1643:1711" placeholder="..." />
+            <marker date="1367927742000" expanded="false" signature="2465:2500" placeholder="..." />
+            <marker date="1367927742000" expanded="true" signature="2501:2618" placeholder="..." />
+            <marker date="1367927742000" expanded="true" signature="2559:2594" placeholder="..." />
+            <marker date="1367927742000" expanded="false" signature="2559:2594" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -523,38 +520,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/model.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="34" selection-start="408" selection-end="408" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1367921206000" expanded="true" signature="1454:1817" placeholder="..." />
-            <marker date="1367921206000" expanded="true" signature="1489:1558" placeholder="..." />
-            <marker date="1367921206000" expanded="true" signature="1606:1673" placeholder="..." />
-            <marker date="1367921206000" expanded="true" signature="1724:1792" placeholder="..." />
-            <marker date="1367921206000" expanded="true" signature="2546:2581" placeholder="..." />
-            <marker date="1367921206000" expanded="true" signature="2582:2699" placeholder="..." />
-            <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="false" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
-            <marker date="1367921206000" expanded="true" signature="2640:2675" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/client.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="34" selection-start="1046" selection-end="1046" vertical-scroll-proportion="0.16582064">
+        <state line="34" column="2" selection-start="1136" selection-end="1136" vertical-scroll-proportion="0.23011844">
           <folding />
         </state>
       </provider>

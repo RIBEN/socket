@@ -27,16 +27,12 @@
           this.by2 = 1000;
           break;
         default:
-          if (obj instanceof World) {
-            this.Players = obj.Players;
-            this.name = obj.name;
-            this.bx1 = obj.bx1;
-            this.bx2 = obj.bx2;
-            this.by1 = obj.by1;
-            this.by2 = obj.by2;
-          } else {
-            throw "Wrong world constructor.";
-          }
+          this.Players = obj.Players;
+          this.name = obj.name;
+          this.bx1 = obj.bx1;
+          this.bx2 = obj.bx2;
+          this.by1 = obj.by1;
+          this.by2 = obj.by2;
       }
     }
 

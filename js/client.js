@@ -37,9 +37,10 @@
       alert("Wc.name=" + Wc.name);
       me = new Player();
       en = new Enemy();
-      setPlayerDiv(me);
       socket.emit('add user', me);
       socket.on('Shut Up And Take My World', function(Ws) {
+        Wc = new World(Ws);
+        setPlayerDiv(me);
         return alert("Wc.name=" + Wc.name);
       });
       socket.on('user have been added', function(pl) {

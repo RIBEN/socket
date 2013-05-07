@@ -33,12 +33,11 @@ do ($ = jQuery) -> $(document).ready(() ->
   me = new Player()
   en = new Enemy()
 
-  setPlayerDiv(me)
-
   socket.emit('add user', me)
 
   socket.on('Shut Up And Take My World', (Ws) ->
-    #Wc = new World(Ws)
+    Wc = new World(Ws)
+    setPlayerDiv(me)
     alert "Wc.name="+Wc.name
   )
   socket.on('user have been added', (pl) ->
