@@ -7,7 +7,7 @@
 
 
 (function() {
-  var Ws, app, fs, io, model, players;
+  var Ws, app, fs, io, model, players, s;
 
   fs = require('fs');
 
@@ -40,8 +40,13 @@
 
   Ws = new model.World();
 
+  s = "xaxa";
+
   io.sockets.on('connection', function(socket) {
     socket.on('add user', function(pl) {
+      pl.name = pl.name + Ws.count;
+      pl.number = Ws.count;
+      socket.emit('change name', pl.name);
       Ws.AddPlayer(pl);
       socket.emit('Shut Up And Take My World', Ws);
       return socket.broadcast.emit('user have been added', pl);
@@ -51,15 +56,15 @@
       return socket.broadcast.emit('user have been changed', pl);
     });
     /*
-    socket.on('add enemy', (enemy) ->
-      enemies[enemy.name] = new model.Enemy(enemy)
-      socket.broadcast.emit('enemy have been added', enemies[enemy.name].raw())
-      )
+      socket.on('add enemy', (enemy) ->
+     enemies[enemy.name] = new model.Enemy(enemy)
+     socket.broadcast.emit('enemy have been added', enemies[enemy.name].raw())
+     )
     
-    socket.on('change enemy', (enemy) ->
-      if enemies[enemy.name]? then enemies[enemy.name].change(enemy)
-      socket.broadcast.emit('enemy have been changed', enemies[enemy.name].raw())
-      )
+      socket.on('change enemy', (enemy) ->
+     if enemies[enemy.name]? then enemies[enemy.name].change(enemy)
+     socket.broadcast.emit('enemy have been changed', enemies[enemy.name].raw())
+     )
     */
 
   });

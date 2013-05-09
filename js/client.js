@@ -11,18 +11,23 @@
 
   (function($) {
     return $(document).ready(function() {
-      var Viewer, Wc, en, me, setPlayerDiv, socket;
+      var Wc, en, me, setPlayerDiv, socket;
       socket = io.connect(document.URL.match(/^http:\/\/[^/]*/));
-      Viewer = function(obj) {
-        var html;
-        if (obj instanceof Player) {
-          html = "<div id='" + this.name + "' class='player'>\n  <div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 10px;'>" + this.ml + "</div>\n  <div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n  <div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:20px;'>" + this.mr + "</div>\n</div>";
-          return html;
-        }
-        if (obj instanceof Enemy) {
-          return alert("This is class Enemy");
-        }
-      };
+      /*
+      Viewer=(obj)->
+        if (obj instanceof Player)
+          html = """
+                <div id='#{@name}' class='player'>
+                  <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 10px;'>#{@ml}</div>
+                  <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
+                  <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:20px;'>#{@mr}</div>
+                </div>
+                """
+          return html
+        if (obj instanceof Enemy)
+          return alert "This is class Enemy"
+      */
+
       setPlayerDiv = function(pl) {
         var plDiv;
         plDiv = $('#' + pl.name);
@@ -38,18 +43,26 @@
       me = new Player();
       en = new Enemy();
       socket.emit('add user', me);
+      socket.on('change name', function(name) {
+        return me.name = name;
+      });
       socket.on('Shut Up And Take My World', function(Ws) {
+        var pl, _i, _len, _ref;
         Wc = new World(Ws);
-        setPlayerDiv(me);
+        _ref = Wc.Players;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          pl = _ref[_i];
+          setPlayerDiv(new Player(pl));
+        }
         return alert("Wc.name=" + Wc.name);
       });
       socket.on('user have been added', function(pl) {
         setPlayerDiv(new Player(pl));
         Wc.AddPlayer(pl);
-        return alert("Joined " + Wc.Players[pl.name].name);
+        return alert("Joined " + Wc.Players[pl.number].name);
       });
-      socket.on('user have been changed', function(data) {
-        setPlayerDiv(new Player(data));
+      socket.on('user have been changed', function(pl) {
+        setPlayerDiv(new Player(pl));
         return Wc.ChangePlayer(pl);
       });
       socket.on('enemy have been added', function(data) {
@@ -72,29 +85,20 @@
             break;
           case 40:
             me.y += 10;
-            break;
-          case 83:
-            en.x = me.x;
-            en.y = me.y + 100;
-            setPlayerDiv(en);
-            /*
-             while(en.x<=100)
-              en.x++
-              setPlayerDiv(en)
-              socket.emit('add enemy', en.raw())
-              socket.emit('change enemy', en.raw())
-            */
+        }
+        /*
+        if String.fromCharCode(e.keyCode) == "B"
+            b = new Bullet(me)
+            setPlayerDiv(b)
+            #me.ml="#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+            #socket.emit('change enemy', b)
+        */
 
-        }
-        if (String.fromCharCode(e.keyCode) === en.cd) {
-          en.x = Math.ceil(Math.random() * 500);
-          en.y = Math.ceil(Math.random() * 500);
-          setPlayerDiv(en);
-          socket.emit('change enemy', en);
-        }
         if (String.fromCharCode(e.keyCode) === me.ml) {
           me.x -= 10;
+          alert(me.ml);
           me.ml = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
+          alert(me.ml);
           setPlayerDiv(me);
           socket.emit('change user', me);
         }

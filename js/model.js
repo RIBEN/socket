@@ -7,7 +7,7 @@
 
 
 (function() {
-  var Enemy, Player, World;
+  var Bullet, Enemy, Player, World;
 
   World = (function() {
     var Bullets, Enemies;
@@ -19,8 +19,9 @@
     function World(obj) {
       switch (typeof obj) {
         case 'undefined':
+          this.count = 0;
           this.name = "World" + (Math.ceil(Math.random() * 1000));
-          this.Players = {};
+          this.Players = [];
           this.bx1 = 0;
           this.bx2 = 1000;
           this.by1 = 0;
@@ -28,6 +29,7 @@
           break;
         default:
           this.Players = obj.Players;
+          this.count = obj.count;
           this.name = obj.name;
           this.bx1 = obj.bx1;
           this.bx2 = obj.bx2;
@@ -37,7 +39,8 @@
     }
 
     World.prototype.AddPlayer = function(pl) {
-      return this.Players[pl.name] = pl;
+      this.Players[this.count] = pl;
+      return this.count++;
     };
 
     World.prototype.AddEnemy = function(en) {};
@@ -47,8 +50,8 @@
     constructor;
 
     World.prototype.ChangePlayer = function(pl) {
-      if (this.Players[pl.name] != null) {
-        return this.Players[pl.name] = pl;
+      if (this.Players[pl.number] != null) {
+        return this.Players[pl.number] = pl;
       }
     };
 
@@ -64,16 +67,21 @@
           this.name = obj;
           this.x = x;
           this.y = y;
+          this.ml = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
+          this.mr = "L";
           break;
         case 'object':
           this.name = obj.name;
           this.x = obj.x;
           this.y = obj.y;
+          this.ml = obj.ml;
+          this.mr = obj.mr;
           break;
         case 'undefined':
-          this.name = "Player" + (Math.ceil(Math.random() * 1000));
-          this.x = 700;
-          this.y = 350;
+          this.number = 0;
+          this.name = "Player_";
+          this.x = Math.ceil(Math.random() * 500);
+          this.y = Math.ceil(Math.random() * 500);
           this.ml = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
           this.mr = "L";
           break;
@@ -162,6 +170,22 @@
     };
 
     return Enemy;
+
+  })();
+
+  Bullet = (function() {
+
+    function Bullet(obj) {
+      this.name = "B";
+      this.x = obj.x;
+      this.y = obj.y + 30;
+    }
+
+    Bullet.prototype.html = function() {
+      return "        <div id='" + this.name + "' class='player' style='background: rgb(" + 0 + "," + 208 + "," + 255 + ")'>" + this.name + "        </div>        ";
+    };
+
+    return Bullet;
 
   })();
 

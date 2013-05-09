@@ -8,28 +8,31 @@ class World
   constructor : (obj) ->
     switch typeof obj
       when 'undefined'
+        @count = 0
         @name = "World#{Math.ceil(Math.random() * 1000)}"
-        @Players = {}
+        @Players = []
         @bx1 = 0
         @bx2 = 1000
         @by1 = 0
         @by2 = 1000
       else
-            @Players = obj.Players
-            @name = obj.name
-            @bx1 = obj.bx1
-            @bx2 = obj.bx2
-            @by1 = obj.by1
-            @by2 = obj.by2
-  AddPlayer : (pl) ->
-    @Players[pl.name] = pl
+         @Players = obj.Players
+         @count = obj.count
+         @name = obj.name
+         @bx1 = obj.bx1
+         @bx2 = obj.bx2
+         @by1 = obj.by1
+         @by2 = obj.by2
+  AddPlayer: (pl) ->
+    @Players[@count] = pl
+    @count++
   AddEnemy: (en)->
     #Enemies.push(en)
   AddBullet: (bullet)->
     #Bullets.push(bullet)
   constructor
-  ChangePlayer :(pl)->
-    if @Players[pl.name]? then @Players[pl.name] = pl
+  ChangePlayer: (pl)->
+    if @Players[pl.number]? then @Players[pl.number] = pl
 
 class Player
   constructor: (obj, x, y) ->
@@ -38,16 +41,21 @@ class Player
         @name = obj
         @x = x
         @y = y
+        @ml = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+        @mr = "L"
       when 'object'
         @name = obj.name
         @x = obj.x
         @y = obj.y
+        @ml = obj.ml
+        @mr = obj.mr
       when 'undefined'
-        @name = "Player#{Math.ceil(Math.random() * 1000)}"
-        #@x = Math.ceil(Math.random() * 500)
-        @x = 700
-        #@y = Math.ceil(Math.random() * 500)
-        @y = 350
+        #@name = "Player#{Math.ceil(Math.random() * 1000)}"
+        @number = 0
+        @name = "Player_"
+        @x = Math.ceil(Math.random() * 500)
+        @y = Math.ceil(Math.random() * 500)
+
         @ml = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
         @mr = "L"
       else throw "Wrong player constructor."
@@ -96,6 +104,7 @@ class Enemy
         @cd = "23"
       else throw "Wrong enemy constructor."
 
+
   html: () ->
     "
     <div id='#{@name}' class='player' style='background: rgb(#{0},#{208},#{255})'>#{@name}
@@ -110,6 +119,18 @@ class Enemy
     @x = obj.x if obj.x?
     @y = obj.y if obj.y?
 
+
+class Bullet
+  constructor: (obj) ->
+    @name = "B"
+    @x = obj.x
+    @y = obj.y + 30
+
+  html: () ->
+    "
+        <div id='#{@name}' class='player' style='background: rgb(#{0},#{208},#{255})'>#{@name}
+        </div>
+        "
 # exports for client (window.) and server (require(...).)
 module?.exports =
   Player : Player
