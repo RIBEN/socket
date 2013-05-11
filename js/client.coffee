@@ -1,5 +1,5 @@
 ###
-  Здесь реализован веьс клиентский JavaScript. Подразумевается, что модель
+  Здесь реализован весь клиентский JavaScript. Подразумевается, что модель
   подключается заранее.
 ###
 
@@ -20,15 +20,20 @@ do ($ = jQuery) -> $(document).ready(() ->
       return alert "This is class Enemy"
   ###
   setPlayerDiv = (pl) ->
-    plDiv = $('#' + pl.name)
-    if plDiv.length is 0
-      plDiv = $(document.body).append( pl.html() )
-      plDiv = $('#' + pl.name)
-    plDiv.css('left', pl.x + 'px')
-    plDiv.css('top',  pl.y + 'px')
+    p = $('#' + pl.name)
+    if p.length is 0
+      p = $(document.body).append( pl.html(0) )
+      p = $('#' + pl.name)
+      p.css('left', pl.x + 'px')
+      p.css('top',  pl.y + 'px')
+    else
+      p = p.html(pl.html(1))
+      #p = $(p).replaceWith(pl.html())
+      p.css('left', pl.x + 'px')
+      p.css('top',  pl.y + 'px')
 
   Wc = new World()
-  alert "Wc.name=" + Wc.name
+  console.log "Wc.name=" + Wc.name
   me = new Player()
   en = new Enemy()
 
@@ -41,13 +46,13 @@ do ($ = jQuery) -> $(document).ready(() ->
   socket.on('Shut Up And Take My World', (Ws) ->
     Wc = new World(Ws)
     setPlayerDiv( new Player(pl) ) for pl in Wc.Players
-    alert "Wc.name=" + Wc.name
+    console.log "Wc.name=" + Wc.name
   )
 
   socket.on('user have been added', (pl) ->
     setPlayerDiv( new Player(pl) )
     Wc.AddPlayer(pl)
-    alert "Joined " + Wc.Players[pl.number].name
+    console.log "Joined " + Wc.Players[pl.number].name
   )
 
   socket.on('user have been changed', (pl) ->
@@ -68,6 +73,12 @@ do ($ = jQuery) -> $(document).ready(() ->
         me.x += 10
       when 40
         me.y += 10
+      when 32
+        b = new Bullet(me)
+
+
+
+        console.log "Bullet create from "+ me.name
     ###
     if String.fromCharCode(e.keyCode) == "B"
         b = new Bullet(me)
@@ -77,15 +88,25 @@ do ($ = jQuery) -> $(document).ready(() ->
     ###
     if String.fromCharCode(e.keyCode) == me.ml
         me.x-=10
-        alert me.ml
-        me.ml="#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        alert me.ml
+        console.log me.ml
+
+        l = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+        while(l == me.ml or l == me.mr)
+          l = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+        me.ml = l
+
         setPlayerDiv(me)
         socket.emit('change user', me)
 
     if String.fromCharCode(e.keyCode) == me.mr
         me.x+=10
-        me.mr="#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+        console.log "mr="+me.mr
+
+        r = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+        while(r == me.ml or r == me.mr)
+          r = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+        me.mr = r
+
         setPlayerDiv(me)
         socket.emit('change user', me)
 

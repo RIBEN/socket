@@ -35,7 +35,7 @@ io.sockets.on('connection', (socket) ->
     socket.emit('Shut Up And Take My World', Ws)
     #players[player.name] = new model.Player(player.name, player.x, player.y)
     socket.broadcast.emit('user have been added', pl )
-  )
+            )
 
   socket.on('change user', (pl) ->
             Ws.ChangePlayer(pl)

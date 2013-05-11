@@ -68,7 +68,7 @@
           this.x = x;
           this.y = y;
           this.ml = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
-          this.mr = "L";
+          this.mr = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
           break;
         case 'object':
           this.name = obj.name;
@@ -83,39 +83,18 @@
           this.x = Math.ceil(Math.random() * 500);
           this.y = Math.ceil(Math.random() * 500);
           this.ml = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
-          this.mr = "L";
+          this.mr = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
           break;
         default:
           throw "Wrong player constructor.";
       }
     }
 
-    Player.prototype.html = function() {
-      return "<div id='" + this.name + "' class='player'>\n   <div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 10px;'>" + this.ml + "</div>\n   <div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n   <div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:20px;'>" + this.mr + "</div>\n</div>";
-      /*
-      $("##{@name} .left")
-      
-      
-      $("##{@name}").css('left', '10px')
-      a = $("##{@name}").css('left')
-      */
-
-    };
-
-    Player.prototype.raw = function() {
-      return {
-        name: this.name,
-        x: this.x,
-        y: this.y
-      };
-    };
-
-    Player.prototype.change = function(obj) {
-      if (obj.x != null) {
-        this.x = obj.x;
-      }
-      if (obj.y != null) {
-        return this.y = obj.y;
+    Player.prototype.html = function(v) {
+      if (v === 0) {
+        return "<div id='" + this.name + "' class='player'>\n  <div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 10px;'>" + this.ml + "</div>\n  <div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n  <div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:10px;'>" + this.mr + "</div>\n</div>";
+      } else {
+        return "<div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 10px;'>" + this.ml + "</div>\n<div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n<div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:10px;'>" + this.mr + "</div>";
       }
     };
 
@@ -152,23 +131,6 @@
       return "    <div id='" + this.name + "' class='player' style='background: rgb(" + 0 + "," + 208 + "," + 255 + ")'>" + this.name + "       <div id='" + this.name + "' class='player' style='background: rgb(" + 50 + "," + 255 + "," + 20 + ")'>" + this.cd + "</div>    </div>    ";
     };
 
-    Enemy.prototype.raw = function() {
-      return {
-        name: this.name,
-        x: this.x,
-        y: this.y
-      };
-    };
-
-    Enemy.prototype.change = function(obj) {
-      if (obj.x != null) {
-        this.x = obj.x;
-      }
-      if (obj.y != null) {
-        return this.y = obj.y;
-      }
-    };
-
     return Enemy;
 
   })();
@@ -177,12 +139,16 @@
 
     function Bullet(obj) {
       this.name = "B";
-      this.x = obj.x;
-      this.y = obj.y + 30;
+      this.x = obj.x + 45;
+      this.y = obj.y - 30;
     }
 
+    Bullet.prototype.Replace = function() {
+      return b.y += 10;
+    };
+
     Bullet.prototype.html = function() {
-      return "        <div id='" + this.name + "' class='player' style='background: rgb(" + 0 + "," + 208 + "," + 255 + ")'>" + this.name + "        </div>        ";
+      return "<div id='" + this.name + "' class='bullet' style='background: rgb(" + 255 + "," + 208 + "," + 255 + ")'>" + this.name + "</div>";
     };
 
     return Bullet;
@@ -193,7 +159,8 @@
     module.exports = {
       Player: Player,
       Enemy: Enemy,
-      World: World
+      World: World,
+      Bullet: Bullet
     };
   }
 
@@ -207,6 +174,10 @@
 
   if (typeof window !== "undefined" && window !== null) {
     window.World = World;
+  }
+
+  if (typeof window !== "undefined" && window !== null) {
+    window.Bullet = Bullet;
   }
 
 }).call(this);

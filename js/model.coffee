@@ -42,7 +42,7 @@ class Player
         @x = x
         @y = y
         @ml = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        @mr = "L"
+        @mr = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
       when 'object'
         @name = obj.name
         @x = obj.x
@@ -57,34 +57,24 @@ class Player
         @y = Math.ceil(Math.random() * 500)
 
         @ml = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        @mr = "L"
+        @mr = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
       else throw "Wrong player constructor."
 
-  html: () ->
-    """
-     <div id='#{@name}' class='player'>
+  html: (v) ->
+    if v is 0
+      """
+      <div id='#{@name}' class='player'>
         <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 10px;'>#{@ml}</div>
         <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
-        <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:20px;'>#{@mr}</div>
-     </div>
-    """
-
-    ###
-    $("##{@name} .left")
-
-
-    $("##{@name}").css('left', '10px')
-    a = $("##{@name}").css('left')
-    ###
-
-  raw: () ->
-    name : @name
-    x    : @x
-    y    : @y
-  change: (obj) ->
-    @x = obj.x if obj.x?
-    @y = obj.y if obj.y?
-
+        <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:10px;'>#{@mr}</div>
+      </div>
+      """
+    else
+      """
+      <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 10px;'>#{@ml}</div>
+      <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
+      <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:10px;'>#{@mr}</div>
+      """
 
 class Enemy
   constructor: (obj, x, y) ->
@@ -111,33 +101,27 @@ class Enemy
        <div id='#{@name}' class='player' style='background: rgb(#{50},#{255},#{20})'>#{@cd}</div>
     </div>
     "
-  raw: () ->
-    name : @name
-    x    : @x
-    y    : @y
-  change: (obj) ->
-    @x = obj.x if obj.x?
-    @y = obj.y if obj.y?
-
 
 class Bullet
   constructor: (obj) ->
     @name = "B"
-    @x = obj.x
-    @y = obj.y + 30
-
+    @x = obj.x + 45
+    @y = obj.y - 30
+  Replace:()->
+    b.y+=10
   html: () ->
-    "
-        <div id='#{@name}' class='player' style='background: rgb(#{0},#{208},#{255})'>#{@name}
-        </div>
-        "
+    """
+    <div id='#{@name}' class='bullet' style='background: rgb(#{255},#{208},#{255})'>#{@name}</div>
+    """
 # exports for client (window.) and server (require(...).)
 module?.exports =
   Player : Player
   Enemy  : Enemy
   World  : World
+  Bullet : Bullet
 window?.Player = Player
 window?.Enemy = Enemy
 window?.World = World
+window?.Bullet = Bullet
 
 

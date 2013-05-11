@@ -3,3 +3,8 @@ div.player {
     border-radius: 5px;
     padding: 3px;
 }
+div.bullet{
+    position: absolute;
+    border-radius: 5px;
+    padding: 3px;
+}
