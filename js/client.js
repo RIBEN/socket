@@ -34,13 +34,11 @@
         if (p.length === 0) {
           p = $(document.body).append(pl.html(0));
           p = $('#' + pl.name);
-          p.css('left', pl.x + 'px');
-          return p.css('top', pl.y + 'px');
         } else {
           p = p.html(pl.html(1));
-          p.css('left', pl.x + 'px');
-          return p.css('top', pl.y + 'px');
         }
+        p.css('left', pl.x + 'px');
+        return p.css('top', pl.y + 'px');
       };
       Wc = new World();
       console.log("Wc.name=" + Wc.name);
@@ -76,7 +74,7 @@
         return setPlayerDiv(new Enemy(data));
       });
       return $("body").keydown(function(e) {
-        var b, l, r, _ref;
+        var l, r, _ref;
         switch (e.keyCode) {
           case 37:
             me.x -= 10;
@@ -91,17 +89,26 @@
             me.y += 10;
             break;
           case 32:
-            b = new Bullet(me);
-            console.log("Bullet create from " + me.name);
-        }
-        /*
-        if String.fromCharCode(e.keyCode) == "B"
+            /*
+            b = new Bullet(me)
+            setInterval(
+              ()->
+                b.y-=10
+                if(b.y<=0)
+                  clearInterval()
+                setPlayerDiv(b)
+                console.log "b.y="+b.y
+              , 50
+            )
+            
+                if String.fromCharCode(e.keyCode) == "B"
             b = new Bullet(me)
             setPlayerDiv(b)
             #me.ml="#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
             #socket.emit('change enemy', b)
-        */
+            */
 
+        }
         if (String.fromCharCode(e.keyCode) === me.ml) {
           me.x -= 10;
           console.log(me.ml);

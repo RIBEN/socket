@@ -24,13 +24,11 @@ do ($ = jQuery) -> $(document).ready(() ->
     if p.length is 0
       p = $(document.body).append( pl.html(0) )
       p = $('#' + pl.name)
-      p.css('left', pl.x + 'px')
-      p.css('top',  pl.y + 'px')
     else
       p = p.html(pl.html(1))
       #p = $(p).replaceWith(pl.html())
-      p.css('left', pl.x + 'px')
-      p.css('top',  pl.y + 'px')
+    p.css('left', pl.x + 'px')
+    p.css('top',  pl.y + 'px')
 
   Wc = new World()
   console.log "Wc.name=" + Wc.name
@@ -73,13 +71,18 @@ do ($ = jQuery) -> $(document).ready(() ->
         me.x += 10
       when 40
         me.y += 10
-      when 32
+      when
         b = new Bullet(me)
+        setInterval(
+          ()->
+            b.y-=10
+            if(b.y<=0)
+              clearInterval()
+            setPlayerDiv(b)
+            console.log "b.y="+b.y
+          , 50)
 
-
-
-        console.log "Bullet create from "+ me.name
-    ###
+###
     if String.fromCharCode(e.keyCode) == "B"
         b = new Bullet(me)
         setPlayerDiv(b)

@@ -92,7 +92,7 @@
 
     Player.prototype.html = function(v) {
       if (v === 0) {
-        return "<div id='" + this.name + "' class='player'>\n  <div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 10px;'>" + this.ml + "</div>\n  <div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n  <div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:10px;'>" + this.mr + "</div>\n</div>";
+        return "<div id='" + this.name + "' class='player'>\n  <div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 10px;'>" + this.mr + "</div>\n  <div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n  <div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:10px;'>" + this.mr + "</div>\n</div>";
       } else {
         return "<div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 10px;'>" + this.ml + "</div>\n<div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n<div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:10px;'>" + this.mr + "</div>";
       }
