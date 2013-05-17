@@ -109,19 +109,16 @@
             */
 
         }
-        if (String.fromCharCode(e.keyCode) === me.ml) {
-          me.x -= 10;
+        if (me.get_symb(String.fromCharCode(e.keyCode)) === $(".left").text()) {
+          me.x -= 100;
           console.log(me.ml);
-          l = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
-          while (l === me.ml || l === me.mr) {
-            l = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
-          }
+
           me.ml = l;
           setPlayerDiv(me);
           socket.emit('change user', me);
         }
-        if (String.fromCharCode(e.keyCode) === me.mr) {
-          me.x += 10;
+        if (String.fromCharCode(e.keyCode) ===$(".right").text()) {
+          me.x += 100;
           console.log("mr=" + me.mr);
           r = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
           while (r === me.ml || r === me.mr) {
