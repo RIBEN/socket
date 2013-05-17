@@ -89,26 +89,20 @@ do ($ = jQuery) -> $(document).ready(() ->
         #me.ml="#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
         #socket.emit('change enemy', b)
     ###
-    if String.fromCharCode(e.keyCode) == me.ml
-        me.x-=10
+    if me.get_symb(String.fromCharCode(e.keyCode)) == $("div.left").text()
+        me.x-=100
         console.log me.ml
 
-        l = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        while(l == me.ml or l == me.mr)
-          l = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        me.ml = l
+
 
         setPlayerDiv(me)
         socket.emit('change user', me)
 
-    if String.fromCharCode(e.keyCode) == me.mr
-        me.x+=10
+    if String.fromCharCode(e.keyCode) == $("div.right").text()
+        me.x+=100
         console.log "mr="+me.mr
 
-        r = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        while(r == me.ml or r == me.mr)
-          r = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        me.mr = r
+
 
         setPlayerDiv(me)
         socket.emit('change user', me)
