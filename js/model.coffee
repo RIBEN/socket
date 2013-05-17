@@ -56,13 +56,12 @@ class Player
         @x = Math.ceil(Math.random() * 500)
         @y = Math.ceil(Math.random() * 500)
 
-        @ml = Player.ChangeWord()
-        @mr = Player.ChangeWord()
-        @mu = Player.ChangeWord()
-        @md = Player.ChangeWord()
+        @ml = String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) )
+        @mr = String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) )
+        @mu = String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) )
+        @md = String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) )
       else throw "Wrong player constructor."
- 
-    
+
   html: (v) ->
     if v is 0
       """
@@ -92,28 +91,26 @@ class Player
       when 1
         @x-=60
         console.log "toLeft "+@x
-        @ml = Player.ChangeWord()
       when 3
         @x+=60
         console.log "toRight "+@x
-        @mr = Player.ChangeWord()
       when 2
         @y-=20
         console.log "toUp "+@y
-        @mu = Player.ChangeWord()
       when 4
         @y+=20
         console.log "toDown "+@y
-        @md = Player.ChangeWord()
       else console.log "Fig"
 
-  @ChangeWord: ()->
+###
+@ChangeWord: ()->
       w = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
       while(w == Player.ml or w == Player.mr or w == Player.mu or w == Player.md)
         w = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
         console.log "testing continue"
       console.log "lalala"
       w
+###
 
 class Enemy
   constructor: (obj, x, y) ->
@@ -146,7 +143,8 @@ class Bullet
     @x = obj.x + 45
     @y = obj.y - 30
   Replace:()->
-    b.y+=10
+    @y-=10
+    console.log @y
   html: () ->
     """
     <div id='#{@name}' class='bullet' style='background: rgb(#{255},#{208},#{255})'>#{@name}</div>

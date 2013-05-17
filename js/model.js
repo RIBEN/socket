@@ -82,10 +82,10 @@
           this.name = "Player_";
           this.x = Math.ceil(Math.random() * 500);
           this.y = Math.ceil(Math.random() * 500);
-          this.ml = Player.ChangeWord();
-          this.mr = Player.ChangeWord();
-          this.mu = Player.ChangeWord();
-          this.md = Player.ChangeWord();
+          this.ml = String.fromCharCode(Math.ceil(65 + Math.random() * 25));
+          this.mr = String.fromCharCode(Math.ceil(65 + Math.random() * 25));
+          this.mu = String.fromCharCode(Math.ceil(65 + Math.random() * 25));
+          this.md = String.fromCharCode(Math.ceil(65 + Math.random() * 25));
           break;
         default:
           throw "Wrong player constructor.";
@@ -104,39 +104,35 @@
       switch (v) {
         case 1:
           this.x -= 60;
-          console.log("toLeft " + this.x);
-          return this.ml = Player.ChangeWord();
+          return console.log("toLeft " + this.x);
         case 3:
           this.x += 60;
-          console.log("toRight " + this.x);
-          return this.mr = Player.ChangeWord();
+          return console.log("toRight " + this.x);
         case 2:
           this.y -= 20;
-          console.log("toUp " + this.y);
-          return this.mu = Player.ChangeWord();
+          return console.log("toUp " + this.y);
         case 4:
           this.y += 20;
-          console.log("toDown " + this.y);
-          return this.md = Player.ChangeWord();
+          return console.log("toDown " + this.y);
         default:
           return console.log("Fig");
       }
     };
 
-    Player.ChangeWord = function() {
-      var w;
-      w = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
-      while (w === Player.ml || w === Player.mr || w === Player.mu || w === Player.md) {
-        w = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
-        console.log("testing continue");
-      }
-      console.log("lalala");
-      return w;
-    };
-
     return Player;
 
   })();
+
+  /*
+  @ChangeWord: ()->
+        w = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+        while(w == Player.ml or w == Player.mr or w == Player.mu or w == Player.md)
+          w = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+          console.log "testing continue"
+        console.log "lalala"
+        w
+  */
+
 
   Enemy = (function() {
 
@@ -181,7 +177,8 @@
     }
 
     Bullet.prototype.Replace = function() {
-      return b.y += 10;
+      this.y -= 10;
+      return console.log(this.y);
     };
 
     Bullet.prototype.html = function() {

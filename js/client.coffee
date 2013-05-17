@@ -19,6 +19,14 @@ do ($ = jQuery) -> $(document).ready(() ->
     if (obj instanceof Enemy)
       return alert "This is class Enemy"
   ###
+  ChangeWord = ()->
+    w = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+    while(w == me.ml or w == me.mr or w == me.mu or w == me.md)
+      w = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+      console.log "testing continue"
+    console.log "lalala"
+    w
+  funt=() -> console.log "пуля летит"
 
   setPlayerDiv = (pl) ->
     p = $('#' + pl.name)
@@ -63,29 +71,32 @@ do ($ = jQuery) -> $(document).ready(() ->
   socket.on('enemy have been changed', (data) -> setPlayerDiv(new Enemy(data) ))
 
   $("body").keydown((e) ->
+    if e.keyCode == 32
+      B = new Bullet (me)
+      setPlayerDiv(B)
+      D = setInterval(B.Replace(),1000)
+
     if String.fromCharCode(e.keyCode) == me.ml
       me.MoveTo(1)
+      me.ml = ChangeWord()
       console.log me.ml
-      setPlayerDiv(me)
-      socket.emit('change user', me)
 
     if String.fromCharCode(e.keyCode) == me.mr
-        me.MoveTo(3)
-        console.log "mr="+me.mr
-        setPlayerDiv(me)
-        socket.emit('change user', me)
+      me.MoveTo(3)
+      me.mr = ChangeWord()
+      console.log "mr="+me.mr
+
 
     if String.fromCharCode(e.keyCode) == me.mu
       me.MoveTo(2)
+      me.mu = ChangeWord()
       console.log me.mu
-      setPlayerDiv(me)
-      socket.emit('change user', me)
 
     if String.fromCharCode(e.keyCode) == me.md
       me.MoveTo(4)
+      me.md = ChangeWord()
       console.log me.md
-      setPlayerDiv(me)
-      socket.emit('change user', me)
+
 
     if 65 <= e.keyCode <= 90
         setPlayerDiv(me)
