@@ -20,7 +20,7 @@
       switch (typeof obj) {
         case 'undefined':
           this.count = 0;
-          this.name = "World" + (Math.ceil(Math.random() * 1000));
+          this.name = "World" + (Math.ceil(Math.random() * 500));
           this.Players = [];
           this.bx1 = 0;
           this.bx2 = 1000;
@@ -62,6 +62,7 @@
   Player = (function() {
 
     function Player(obj, x, y) {
+      this.array = ["0", "T", "D", "C", "L"];
       switch (typeof obj) {
         case 'string':
           this.name = obj;
@@ -82,7 +83,8 @@
           this.name = "Player_";
           this.x = Math.ceil(Math.random() * 500);
           this.y = Math.ceil(Math.random() * 500);
-          this.ml = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
+          this.i = Math.ceil(Math.random() * 4);
+          this.ml = this.array[this.i];
           this.mr = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
           break;
         default:
@@ -90,11 +92,23 @@
       }
     }
 
+    Player.prototype.get_symb = function(char) {
+      this.char = char;
+      this.words = this.array[Player.i];
+      this.count = 0;
+      if (this.words.charAt(this.count) === this.char) {
+        this.count = this.count + 1;
+        if (this.count === this.words.length) {
+          return this.words = this.array[i];
+        }
+      }
+    };
+
     Player.prototype.html = function(v) {
       if (v === 0) {
-        return "<div id='" + this.name + "' class='player'>\n  <div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 10px;'>" + this.mr + "</div>\n  <div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n  <div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:10px;'>" + this.mr + "</div>\n</div>";
+        return "<div id='" + this.name + "' class='player'>\n  <div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 50px;'>" + this.ml + "</div>\n  <div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n  <div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:50px;'>" + this.mr + "</div>\n</div>";
       } else {
-        return "<div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 10px;'>" + this.ml + "</div>\n<div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n<div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:10px;'>" + this.mr + "</div>";
+        return "<div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 50px;'>" + this.ml + "</div>\n<div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n<div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 50px;'>" + this.mr + "</div>";
       }
     };
 
@@ -117,7 +131,7 @@
           this.y = obj.y;
           break;
         case 'undefined':
-          this.name = "Enemy" + (Math.ceil(Math.random() * 1000));
+          this.name = "Enemy" + (Math.ceil(Math.random() * 100));
           this.x = Player.x;
           this.y = Player.y;
           this.cd = "23";
