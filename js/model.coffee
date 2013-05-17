@@ -59,17 +59,7 @@ class Player
         @ml = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
         @mr = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
       else throw "Wrong player constructor."
-  get_symb:(@char)->
-    @words=@array[Player.i]
-    @count=0
-    if @words.charAt(@count) == @char
-     #alert("correct symbol: " + @char);
-     @count=@count+1
-     if @count == @words.length
-       #alert("word has been entered");
-       @words =@array[i]
-   #else
-    #alert "wrong symbol. expected:" + words.charAt (@count)
+ 
     
   html: (v) ->
     if v is 0
