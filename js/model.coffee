@@ -56,8 +56,10 @@ class Player
         @x = Math.ceil(Math.random() * 500)
         @y = Math.ceil(Math.random() * 500)
 
-        @ml = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        @mr = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+        @ml = Player.ChangeWord()
+        @mr = Player.ChangeWord()
+        @mu = Player.ChangeWord()
+        @md = Player.ChangeWord()
       else throw "Wrong player constructor."
  
     
@@ -65,17 +67,53 @@ class Player
     if v is 0
       """
       <div id='#{@name}' class='player'>
-        <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 10px;'>#{@mr}</div>
-        <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
-        <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:10px;'>#{@mr}</div>
+        <div class='top'>#{@mu}</div>
+        <div class='middle_line'>
+          <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 10px;'>#{@mr}</div>
+          <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
+          <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:10px;'>#{@mr}</div>
+        </div>
+        <div class='bottom'>#{@md}</div>
       </div>
       """
     else
       """
-      <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 10px;'>#{@ml}</div>
-      <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
-      <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:10px;'>#{@mr}</div>
+      <div class='top'>#{@mu}</div>
+      <div class='middle_line'>
+        <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 10px;'>#{@ml}</div>
+        <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
+        <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:10px;'>#{@mr}</div>
+      </div>
+      <div class='bottom'>#{@md}</div>
       """
+
+  MoveTo: (v) ->
+    switch v
+      when 1
+        @x-=60
+        console.log "toLeft "+@x
+        @ml = Player.ChangeWord()
+      when 3
+        @x+=60
+        console.log "toRight "+@x
+        @mr = Player.ChangeWord()
+      when 2
+        @y-=20
+        console.log "toUp "+@y
+        @mu = Player.ChangeWord()
+      when 4
+        @y+=20
+        console.log "toDown "+@y
+        @md = Player.ChangeWord()
+      else console.log "Fig"
+
+  @ChangeWord: ()->
+      w = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+      while(w == Player.ml or w == Player.mr or w == Player.mu or w == Player.md)
+        w = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+        console.log "testing continue"
+      console.log "lalala"
+      w
 
 class Enemy
   constructor: (obj, x, y) ->
@@ -92,9 +130,8 @@ class Enemy
         @name = "Enemy#{Math.ceil(Math.random() * 1000)}"
         @x = Player.x
         @y = Player.y
-        @cd = "23"
+        cd = "23"
       else throw "Wrong enemy constructor."
-
 
   html: () ->
     "

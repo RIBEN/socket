@@ -19,6 +19,7 @@ do ($ = jQuery) -> $(document).ready(() ->
     if (obj instanceof Enemy)
       return alert "This is class Enemy"
   ###
+
   setPlayerDiv = (pl) ->
     p = $('#' + pl.name)
     if p.length is 0
@@ -62,58 +63,31 @@ do ($ = jQuery) -> $(document).ready(() ->
   socket.on('enemy have been changed', (data) -> setPlayerDiv(new Enemy(data) ))
 
   $("body").keydown((e) ->
-    switch e.keyCode
-      when 37
-        me.x -= 10
-      when 38
-        me.y -= 10
-      when 39
-        me.x += 10
-      when 40
-        me.y += 10
-      when
-        b = new Bullet(me)
-        setInterval(
-          ()->
-            b.y-=10
-            if(b.y<=0)
-              clearInterval()
-            setPlayerDiv(b)
-            console.log "b.y="+b.y
-          , 50)
-
-###
-    if String.fromCharCode(e.keyCode) == "B"
-        b = new Bullet(me)
-        setPlayerDiv(b)
-        #me.ml="#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        #socket.emit('change enemy', b)
-    ###
     if String.fromCharCode(e.keyCode) == me.ml
-        me.x-=10
-        console.log me.ml
-
-        l = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        while(l == me.ml or l == me.mr)
-          l = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        me.ml = l
-
-        setPlayerDiv(me)
-        socket.emit('change user', me)
+      me.MoveTo(1)
+      console.log me.ml
+      setPlayerDiv(me)
+      socket.emit('change user', me)
 
     if String.fromCharCode(e.keyCode) == me.mr
-        me.x+=10
+        me.MoveTo(3)
         console.log "mr="+me.mr
-
-        r = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        while(r == me.ml or r == me.mr)
-          r = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        me.mr = r
-
         setPlayerDiv(me)
         socket.emit('change user', me)
 
-    if 37 <= e.keyCode <= 40
+    if String.fromCharCode(e.keyCode) == me.mu
+      me.MoveTo(2)
+      console.log me.mu
+      setPlayerDiv(me)
+      socket.emit('change user', me)
+
+    if String.fromCharCode(e.keyCode) == me.md
+      me.MoveTo(4)
+      console.log me.md
+      setPlayerDiv(me)
+      socket.emit('change user', me)
+
+    if 65 <= e.keyCode <= 90
         setPlayerDiv(me)
         socket.emit('change user', me)
   )

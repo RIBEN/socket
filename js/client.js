@@ -74,64 +74,32 @@
         return setPlayerDiv(new Enemy(data));
       });
       return $("body").keydown(function(e) {
-        var l, r, _ref;
-        switch (e.keyCode) {
-          case 37:
-            me.x -= 10;
-            break;
-          case 38:
-            me.y -= 10;
-            break;
-          case 39:
-            me.x += 10;
-            break;
-          case 40:
-            me.y += 10;
-            break;
-          case 32:
-            /*
-            b = new Bullet(me)
-            setInterval(
-              ()->
-                b.y-=10
-                if(b.y<=0)
-                  clearInterval()
-                setPlayerDiv(b)
-                console.log "b.y="+b.y
-              , 50
-            )
-            
-                if String.fromCharCode(e.keyCode) == "B"
-            b = new Bullet(me)
-            setPlayerDiv(b)
-            #me.ml="#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-            #socket.emit('change enemy', b)
-            */
-
-        }
+        var _ref;
         if (String.fromCharCode(e.keyCode) === me.ml) {
-          me.x -= 10;
+          me.MoveTo(1);
           console.log(me.ml);
-          l = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
-          while (l === me.ml || l === me.mr) {
-            l = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
-          }
-          me.ml = l;
           setPlayerDiv(me);
           socket.emit('change user', me);
         }
         if (String.fromCharCode(e.keyCode) === me.mr) {
-          me.x += 10;
+          me.MoveTo(3);
           console.log("mr=" + me.mr);
-          r = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
-          while (r === me.ml || r === me.mr) {
-            r = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
-          }
-          me.mr = r;
           setPlayerDiv(me);
           socket.emit('change user', me);
         }
-        if ((37 <= (_ref = e.keyCode) && _ref <= 40)) {
+        if (String.fromCharCode(e.keyCode) === me.mu) {
+          me.MoveTo(2);
+          console.log(me.mu);
+          setPlayerDiv(me);
+          socket.emit('change user', me);
+        }
+        if (String.fromCharCode(e.keyCode) === me.md) {
+          me.MoveTo(4);
+          console.log(me.md);
+          setPlayerDiv(me);
+          socket.emit('change user', me);
+        }
+        if ((65 <= (_ref = e.keyCode) && _ref <= 90)) {
           setPlayerDiv(me);
           return socket.emit('change user', me);
         }

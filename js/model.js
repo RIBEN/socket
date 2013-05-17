@@ -82,8 +82,10 @@
           this.name = "Player_";
           this.x = Math.ceil(Math.random() * 500);
           this.y = Math.ceil(Math.random() * 500);
-          this.ml = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
-          this.mr = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
+          this.ml = Player.ChangeWord();
+          this.mr = Player.ChangeWord();
+          this.mu = Player.ChangeWord();
+          this.md = Player.ChangeWord();
           break;
         default:
           throw "Wrong player constructor.";
@@ -92,10 +94,44 @@
 
     Player.prototype.html = function(v) {
       if (v === 0) {
-        return "<div id='" + this.name + "' class='player'>\n  <div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 10px;'>" + this.mr + "</div>\n  <div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n  <div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:10px;'>" + this.mr + "</div>\n</div>";
+        return "<div id='" + this.name + "' class='player'>\n  <div class='top'>" + this.mu + "</div>\n  <div class='middle_line'>\n    <div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 10px;'>" + this.mr + "</div>\n    <div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n    <div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:10px;'>" + this.mr + "</div>\n  </div>\n  <div class='bottom'>" + this.md + "</div>\n</div>";
       } else {
-        return "<div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 10px;'>" + this.ml + "</div>\n<div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n<div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:10px;'>" + this.mr + "</div>";
+        return "<div class='top'>" + this.mu + "</div>\n<div class='middle_line'>\n  <div class='left' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width: 10px;'>" + this.ml + "</div>\n  <div class=\"main\" style='background:rgb(" + 255 + "," + 0 + "," + 0 + ");display: inline-block;width: 70px;'>" + this.name + "</div>\n  <div class='right' style='background:rgb(" + 50 + "," + 255 + "," + 20 + ");display: inline-block;width:10px;'>" + this.mr + "</div>\n</div>\n<div class='bottom'>" + this.md + "</div>";
       }
+    };
+
+    Player.prototype.MoveTo = function(v) {
+      switch (v) {
+        case 1:
+          this.x -= 60;
+          console.log("toLeft " + this.x);
+          return this.ml = Player.ChangeWord();
+        case 3:
+          this.x += 60;
+          console.log("toRight " + this.x);
+          return this.mr = Player.ChangeWord();
+        case 2:
+          this.y -= 20;
+          console.log("toUp " + this.y);
+          return this.mu = Player.ChangeWord();
+        case 4:
+          this.y += 20;
+          console.log("toDown " + this.y);
+          return this.md = Player.ChangeWord();
+        default:
+          return console.log("Fig");
+      }
+    };
+
+    Player.ChangeWord = function() {
+      var w;
+      w = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
+      while (w === Player.ml || w === Player.mr || w === Player.mu || w === Player.md) {
+        w = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
+        console.log("testing continue");
+      }
+      console.log("lalala");
+      return w;
     };
 
     return Player;
@@ -105,6 +141,7 @@
   Enemy = (function() {
 
     function Enemy(obj, x, y) {
+      var cd;
       switch (typeof obj) {
         case 'string':
           this.name = obj;
@@ -120,7 +157,7 @@
           this.name = "Enemy" + (Math.ceil(Math.random() * 1000));
           this.x = Player.x;
           this.y = Player.y;
-          this.cd = "23";
+          cd = "23";
           break;
         default:
           throw "Wrong enemy constructor.";
