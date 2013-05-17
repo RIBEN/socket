@@ -9,7 +9,7 @@ class World
     switch typeof obj
       when 'undefined'
         @count = 0
-        @name = "World#{Math.ceil(Math.random() * 1000)}"
+        @name = "World#{Math.ceil(Math.random() *500)}"
         @Players = []
         @bx1 = 0
         @bx2 = 1000
@@ -36,6 +36,7 @@ class World
 
 class Player
   constructor: (obj, x, y) ->
+    @array=["0","T","D","C","L"]
     switch typeof obj
       when 'string'
         @name = obj
@@ -55,12 +56,14 @@ class Player
         @name = "Player_"
         @x = Math.ceil(Math.random() * 500)
         @y = Math.ceil(Math.random() * 500)
-
-        @ml = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+        @i= Math.ceil(Math.random() * 4)
+        @ml =@array[@i]
         @mr = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
       else throw "Wrong player constructor."
-      
-      get_symb:(@char)->
+
+
+
+  get_symb:(@char)->
     @words=@array[Player.i]
     @count=0
     if @words.charAt(@count) == @char
@@ -76,16 +79,16 @@ class Player
     if v is 0
       """
       <div id='#{@name}' class='player'>
-        <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 10px;'>#{@mr}</div>
+        <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 50px;'>#{@ml}</div>
         <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
-        <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:10px;'>#{@mr}</div>
+        <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:50px;'>#{@mr}</div>
       </div>
       """
     else
       """
-      <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 10px;'>#{@ml}</div>
+      <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 50px;'>#{@ml}</div>
       <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
-      <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:10px;'>#{@mr}</div>
+      <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 50px;'>#{@mr}</div>
       """
 
 class Enemy
@@ -100,7 +103,7 @@ class Enemy
         @x = obj.x
         @y = obj.y
       when 'undefined'
-        @name = "Enemy#{Math.ceil(Math.random() * 1000)}"
+        @name = "Enemy#{Math.ceil(Math.random()*100)}"
         @x = Player.x
         @y = Player.y
         @cd = "23"
