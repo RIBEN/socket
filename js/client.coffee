@@ -1,24 +1,8 @@
-###
-  Здесь реализован весь клиентский JavaScript. Подразумевается, что модель
-  подключается заранее.
-###
-
 do ($ = jQuery) -> $(document).ready(() ->
   socket = io.connect(document.URL.match(/^http:\/\/[^/]*/))
-  ###
-  Viewer=(obj)->
-    if (obj instanceof Player)
-      html = """
-            <div id='#{@name}' class='player'>
-              <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 10px;'>#{@ml}</div>
-              <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
-              <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:20px;'>#{@mr}</div>
-            </div>
-            """
-      return html
-    if (obj instanceof Enemy)
-      return alert "This is class Enemy"
-  ###
+
+
+
   setPlayerDiv = (pl) ->
     p = $('#' + pl.name)
     if p.length is 0
@@ -29,6 +13,8 @@ do ($ = jQuery) -> $(document).ready(() ->
       #p = $(p).replaceWith(pl.html())
     p.css('left', pl.x + 'px')
     p.css('top',  pl.y + 'px')
+
+
 
   Wc = new World()
   console.log "Wc.name=" + Wc.name
@@ -60,6 +46,14 @@ do ($ = jQuery) -> $(document).ready(() ->
 
   socket.on('enemy have been added', (data) -> setPlayerDiv(new Enemy(data) ) )
   socket.on('enemy have been changed', (data) -> setPlayerDiv(new Enemy(data) ))
+  ps = 0
+  count = 0
+  pl = 0
+  pt = 0
+  wordsl = me.arraymove[me.i]
+  wordsr = me.arraymove[me.j]
+  wordsu = me.arraymove[me.m]
+  wordsb = me.arraymove[me.l]
 
   $("body").keydown((e) ->
     switch e.keyCode
@@ -71,52 +65,64 @@ do ($ = jQuery) -> $(document).ready(() ->
         me.x += 10
       when 40
         me.y += 10
-      when
-        b = new Bullet(me)
-        setInterval(
-          ()->
-            b.y-=10
-            if(b.y<=0)
-              clearInterval()
-            setPlayerDiv(b)
-            console.log "b.y="+b.y
-          , 50)
-
-###
-    if String.fromCharCode(e.keyCode) == "B"
-        b = new Bullet(me)
-        setPlayerDiv(b)
-        #me.ml="#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        #socket.emit('change enemy', b)
-    ###
-    if me.get_symb(String.fromCharCode(e.keyCode)) == $("div.left").text()
-        me.x-=100
-        console.log me.ml
 
 
 
-        setPlayerDiv(me)
-        socket.emit('change user', me)
+    if String.fromCharCode(e.keyCode) == wordsl.charAt(count)
+      count=count+1
+      if count == wordsl.length
+       count=0
+       me.x-=100
+       me.i=Math.ceil(Math.random()*30)
+       me.ml=me.arraymove[me.i]
+       wordsl=me.arraymove[me.i]
+    else if String.fromCharCode(e.keyCode) != wordsl.charAt(count)
+      count=0
 
-    if String.fromCharCode(e.keyCode) == $("div.right").text()
+    setPlayerDiv(me)
+    socket.emit('change user', me)
+
+    if String.fromCharCode(e.keyCode) == wordsr.charAt(ps)
+      ps=ps+1
+      if ps == wordsr.length
+        ps=0
         me.x+=100
-        console.log "mr="+me.mr
+        me.j=Math.ceil(Math.random()*30)
+        me.mr=me.arraymove[me.j]
+        wordsr=me.arraymove[me.j]
+    else if String.fromCharCode(e.keyCode) != wordsr.charAt(count)
+      ps=0
+    setPlayerDiv(me)
+    socket.emit('change user', me)
 
+    if String.fromCharCode(e.keyCode) == wordsu.charAt(pl)
+      pl=pl+1
+      if pl == wordsu.length
+        pl=0
+        me.y-=100
+        me.m=Math.ceil(Math.random()*20)
+        me.mu=me.arraymove[me.m]
+        wordsu=me.arraymove[me.m]
+    else if String.fromCharCode(e.keyCode) != wordsu.charAt(count)
+      pl=0
+    setPlayerDiv(me)
+    socket.emit('change user', me)
 
-
-        setPlayerDiv(me)
-        socket.emit('change user', me)
+    if String.fromCharCode(e.keyCode) == wordsb.charAt(pt)
+      pt=pt+1
+      if pt == wordsb.length
+        pt=0
+        me.y+=100
+        me.l=Math.ceil(Math.random()*20)
+        me.md=me.arraymove[me.l]
+        wordsb=me.arraymove[me.l]
+    else if String.fromCharCode(e.keyCode) != wordsb.charAt(count)
+      pt=0
+    setPlayerDiv(me)
+    socket.emit('change user', me)
 
     if 37 <= e.keyCode <= 40
         setPlayerDiv(me)
         socket.emit('change user', me)
   )
-
-
-
 )
-
-
-
-
-
