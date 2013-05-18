@@ -36,14 +36,16 @@ class World
 
 class Player
   constructor: (obj, x, y) ->
-    @array=["0","T","D","C","L"]
+    @arraymove=["LOOK","WARRIOR","VOLUME","RUN","DEVIL","NOTE","ANDROID","COFFEE","SCRIPT","APPLE","BANG","GOOGLE","JOKE","ATOM","BASE","BEGIN","MEMENTO","BREEZE","CARRY","CHECK","DANCE","UNIT","OTHER","HARD","CAPTURE",
+    "CONTRACT","SWAP","POWER","TED","PICTURE","TIME"]
+    @array=["HUNTER"]
     switch typeof obj
       when 'string'
         @name = obj
         @x = x
         @y = y
-        @ml = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-        @mr = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+        @ml = @array[@i]
+        @mr = @array[@j]
       when 'object'
         @name = obj.name
         @x = obj.x
@@ -51,44 +53,42 @@ class Player
         @ml = obj.ml
         @mr = obj.mr
       when 'undefined'
-        #@name = "Player#{Math.ceil(Math.random() * 1000)}"
         @number = 0
         @name = "Player_"
         @x = Math.ceil(Math.random() * 500)
         @y = Math.ceil(Math.random() * 500)
-        @i= Math.ceil(Math.random() * 4)
-        @ml =@array[@i]
-        @mr = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+        @i= Math.ceil(Math.random() * 30)
+        @j= Math.ceil(Math.random() * 30)
+        @l= Math.ceil(Math.random() * 30)
+        @m= Math.ceil(Math.random() * 30)
+        @ml = @arraymove[@i]
+        @mr = @arraymove[@j]
+        @md = @arraymove[@l]
+        @mu = @arraymove[@m]
       else throw "Wrong player constructor."
-
-
-
-  get_symb:(@char)->
-    @words=@array[Player.i]
-    @count=0
-    if @words.charAt(@count) == @char
-     #alert("correct symbol: " + @char);
-     @count=@count+1
-     if @count == @words.length
-       #alert("word has been entered");
-       @words =@array[i]
-   #else
-    #alert "wrong symbol. expected:" + words.charAt (@count)
 
   html: (v) ->
     if v is 0
       """
       <div id='#{@name}' class='player'>
-        <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 50px;'>#{@ml}</div>
-        <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
-        <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:50px;'>#{@mr}</div>
+      <div class='top' style='background:rgb(#{50},#{255},#{20});width: 70px;'>#{@mu}</div>
+      <div class='middle_line'>
+      <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 70px;'>#{@ml}</div>
+      <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
+      <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 70px;'>#{@mr}</div>
+      </div>
+      <div class='bottom' style='background:rgb(#{50},#{255},#{20});width: 70px;'>#{@md}</div>
       </div>
       """
     else
       """
-      <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 50px;'>#{@ml}</div>
+      <div class='top' style='background:rgb(#{50},#{255},#{20});width: 70px;'>#{@mu}</div>
+      <div class='middle_line'>
+      <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 70px;'>#{@ml}</div>
       <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
-      <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 50px;'>#{@mr}</div>
+      <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:70px;'>#{@mr}</div>
+      </div>
+      <div class='bottom' style='background:rgb(#{50},#{255},#{20});width: 70px;'>#{@md}</div>
       """
 
 class Enemy
