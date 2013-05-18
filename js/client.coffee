@@ -35,9 +35,18 @@ do ($ = jQuery) -> $(document).ready(() ->
       p = $('#' + pl.name)
     else
       p = p.html(pl.html(1))
-      #p = $(p).replaceWith(pl.html())
     p.css('left', pl.x + 'px')
     p.css('top',  pl.y + 'px')
+
+  setBDiv = (B) ->
+    b = $('#' + B.name)
+    if b.length is 0
+      b = $(document.body).append( B.html() )
+      b = $('#' + B.name)
+    else
+      b = b.html(B.html())
+    b.css('left', B.x + 'px')
+    b.css('top',  B.y + 'px')
 
   Wc = new World()
   console.log "Wc.name=" + Wc.name
@@ -67,19 +76,44 @@ do ($ = jQuery) -> $(document).ready(() ->
     Wc.ChangePlayer(pl)
   )
 
+#BULLET
+  socket.on('bullet have been added',(pl) ->
+    Wc.ChangePlayer(pl)
+    setBDiv( new Bullet(pl.Bullets[pl.countB]))
+    console.log 'bullet have been added'
+  )
+
+  socket.on('bullet have been changed', (B) ->
+    setBDiv( new Bullet(B) )
+    Wc.ChangeBullet(B)
+    console.log "bullet have been changed"
+  )
+
+#ENEMY
   socket.on('enemy have been added', (data) -> setPlayerDiv(new Enemy(data) ) )
   socket.on('enemy have been changed', (data) -> setPlayerDiv(new Enemy(data) ))
 
   $("body").keydown((e) ->
     if e.keyCode == 32
-      B = new Bullet (me)
-      setPlayerDiv(B)
-      D = setInterval(B.Replace(),1000)
+      B = new Bullet(me)
+      console.log B.name, B.number
+      me.AddBullet(B)
+      socket.emit('add bullet',me)
+      setBDiv(B)
+
+      D = setInterval(
+        ()->
+            B.Replace()
+            me.ChangeBullet(B)
+            socket.emit('add bullet',me)
+            setBDiv(B)
+        ,1000,B)
 
     if String.fromCharCode(e.keyCode) == me.ml
       me.MoveTo(1)
       me.ml = ChangeWord()
       console.log me.ml
+
 
     if String.fromCharCode(e.keyCode) == me.mr
       me.MoveTo(3)
@@ -87,20 +121,22 @@ do ($ = jQuery) -> $(document).ready(() ->
       console.log "mr="+me.mr
 
 
+
     if String.fromCharCode(e.keyCode) == me.mu
       me.MoveTo(2)
       me.mu = ChangeWord()
       console.log me.mu
+
 
     if String.fromCharCode(e.keyCode) == me.md
       me.MoveTo(4)
       me.md = ChangeWord()
       console.log me.md
 
-
     if 65 <= e.keyCode <= 90
-        setPlayerDiv(me)
-        socket.emit('change user', me)
+      Wc.ChangePlayer(me)
+      setPlayerDiv(me)
+      socket.emit('change user', me)
   )
 
 

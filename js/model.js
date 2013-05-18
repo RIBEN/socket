@@ -10,16 +10,14 @@
   var Bullet, Enemy, Player, World;
 
   World = (function() {
-    var Bullets, Enemies;
+    var Enemies;
 
     Enemies = {};
-
-    Bullets = {};
 
     function World(obj) {
       switch (typeof obj) {
         case 'undefined':
-          this.count = 0;
+          this.countP = 0;
           this.name = "World" + (Math.ceil(Math.random() * 1000));
           this.Players = [];
           this.bx1 = 0;
@@ -29,7 +27,7 @@
           break;
         default:
           this.Players = obj.Players;
-          this.count = obj.count;
+          this.countP = obj.countP;
           this.name = obj.name;
           this.bx1 = obj.bx1;
           this.bx2 = obj.bx2;
@@ -39,13 +37,11 @@
     }
 
     World.prototype.AddPlayer = function(pl) {
-      this.Players[this.count] = pl;
-      return this.count++;
+      this.Players[this.countP] = pl;
+      return this.countP++;
     };
 
     World.prototype.AddEnemy = function(en) {};
-
-    World.prototype.AddBullet = function(bullet) {};
 
     constructor;
 
@@ -61,23 +57,29 @@
 
   Player = (function() {
 
-    function Player(obj, x, y) {
+    function Player(obj) {
       switch (typeof obj) {
         case 'string':
           this.name = obj;
-          this.x = x;
-          this.y = y;
+          this.x = obj.x;
+          this.y = obj.y;
           this.ml = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
           this.mr = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
           break;
         case 'object':
+          this.Bullets = obj.Bullets;
+          this.countB = obj.countB;
           this.name = obj.name;
           this.x = obj.x;
           this.y = obj.y;
           this.ml = obj.ml;
           this.mr = obj.mr;
+          this.mu = obj.mu;
+          this.md = obj.md;
           break;
         case 'undefined':
+          this.Bullets = [];
+          this.countB = 0;
           this.number = 0;
           this.name = "Player_";
           this.x = Math.ceil(Math.random() * 500);
@@ -91,6 +93,17 @@
           throw "Wrong player constructor.";
       }
     }
+
+    Player.prototype.AddBullet = function(B) {
+      this.Bullets[this.countB] = B;
+      return this.countB++;
+    };
+
+    Player.prototype.ChangeBullet = function(B) {
+      if (this.Bullets[B.number] != null) {
+        return this.Bullets[B.number] = B;
+      }
+    };
 
     Player.prototype.html = function(v) {
       if (v === 0) {
@@ -171,17 +184,27 @@
   Bullet = (function() {
 
     function Bullet(obj) {
-      this.name = "B";
-      this.x = obj.x + 45;
-      this.y = obj.y - 30;
+      if (obj.MoveTo) {
+        this.cr = obj.number;
+        this.name = "B_" + obj.number;
+        this.number = obj.countB;
+        this.x = obj.x + 45;
+        this.y = obj.y - 30;
+      } else {
+        this.cr = obj.cr;
+        this.name = obj.name;
+        this.number = obj.number;
+        this.x = obj.x;
+        this.y = obj.y;
+      }
     }
 
     Bullet.prototype.Replace = function() {
       this.y -= 10;
-      return console.log(this.y);
+      return console.log(this.name, this.y);
     };
 
-    Bullet.prototype.html = function() {
+    Bullet.prototype.html = function(v) {
       return "<div id='" + this.name + "' class='bullet' style='background: rgb(" + 255 + "," + 208 + "," + 255 + ")'>" + this.name + "</div>";
     };
 

@@ -11,7 +11,7 @@
 
   (function($) {
     return $(document).ready(function() {
-      var ChangeWord, Wc, en, funt, me, setPlayerDiv, socket;
+      var ChangeWord, Wc, en, funt, me, setBDiv, setPlayerDiv, socket;
       socket = io.connect(document.URL.match(/^http:\/\/[^/]*/));
       /*
       Viewer=(obj)->
@@ -53,6 +53,18 @@
         p.css('left', pl.x + 'px');
         return p.css('top', pl.y + 'px');
       };
+      setBDiv = function(B) {
+        var b;
+        b = $('#' + B.name);
+        if (b.length === 0) {
+          b = $(document.body).append(B.html());
+          b = $('#' + B.name);
+        } else {
+          b = b.html(B.html());
+        }
+        b.css('left', B.x + 'px');
+        return b.css('top', B.y + 'px');
+      };
       Wc = new World();
       console.log("Wc.name=" + Wc.name);
       me = new Player();
@@ -80,6 +92,16 @@
         setPlayerDiv(new Player(pl));
         return Wc.ChangePlayer(pl);
       });
+      socket.on('bullet have been added', function(pl) {
+        Wc.ChangePlayer(pl);
+        setBDiv(new Bullet(pl.Bullets[pl.countB]));
+        return console.log('bullet have been added');
+      });
+      socket.on('bullet have been changed', function(B) {
+        setBDiv(new Bullet(B));
+        Wc.ChangeBullet(B);
+        return console.log("bullet have been changed");
+      });
       socket.on('enemy have been added', function(data) {
         return setPlayerDiv(new Enemy(data));
       });
@@ -90,8 +112,16 @@
         var B, D, _ref;
         if (e.keyCode === 32) {
           B = new Bullet(me);
-          setPlayerDiv(B);
-          D = setInterval(B.Replace(), 1000);
+          console.log(B.name, B.number);
+          me.AddBullet(B);
+          socket.emit('add bullet', me);
+          setBDiv(B);
+          D = setInterval(function() {
+            B.Replace();
+            me.ChangeBullet(B);
+            socket.emit('add bullet', me);
+            return setBDiv(B);
+          }, 1000, B);
         }
         if (String.fromCharCode(e.keyCode) === me.ml) {
           me.MoveTo(1);
@@ -114,6 +144,7 @@
           console.log(me.md);
         }
         if ((65 <= (_ref = e.keyCode) && _ref <= 90)) {
+          Wc.ChangePlayer(me);
           setPlayerDiv(me);
           return socket.emit('change user', me);
         }

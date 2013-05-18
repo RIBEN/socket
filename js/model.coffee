@@ -4,11 +4,10 @@
 
 class World
   Enemies = {}
-  Bullets = {}
   constructor : (obj) ->
     switch typeof obj
       when 'undefined'
-        @count = 0
+        @countP = 0
         @name = "World#{Math.ceil(Math.random() * 1000)}"
         @Players = []
         @bx1 = 0
@@ -16,41 +15,47 @@ class World
         @by1 = 0
         @by2 = 1000
       else
-         @Players = obj.Players
-         @count = obj.count
-         @name = obj.name
-         @bx1 = obj.bx1
-         @bx2 = obj.bx2
-         @by1 = obj.by1
-         @by2 = obj.by2
+        @Players = obj.Players
+        @countP = obj.countP
+        @name = obj.name
+        @bx1 = obj.bx1
+        @bx2 = obj.bx2
+        @by1 = obj.by1
+        @by2 = obj.by2
   AddPlayer: (pl) ->
-    @Players[@count] = pl
-    @count++
+    @Players[@countP] = pl
+    @countP++
   AddEnemy: (en)->
     #Enemies.push(en)
-  AddBullet: (bullet)->
-    #Bullets.push(bullet)
   constructor
   ChangePlayer: (pl)->
     if @Players[pl.number]? then @Players[pl.number] = pl
 
+
 class Player
-  constructor: (obj, x, y) ->
+  constructor: (obj) ->
     switch typeof obj
       when 'string'
         @name = obj
-        @x = x
-        @y = y
+        @x = obj.x
+        @y = obj.y
         @ml = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
         @mr = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
       when 'object'
+        @Bullets = obj.Bullets
+        @countB = obj.countB
         @name = obj.name
         @x = obj.x
         @y = obj.y
         @ml = obj.ml
         @mr = obj.mr
+        @mu = obj.mu
+        @md = obj.md
       when 'undefined'
         #@name = "Player#{Math.ceil(Math.random() * 1000)}"
+        @Bullets = []
+        @countB = 0
+
         @number = 0
         @name = "Player_"
         @x = Math.ceil(Math.random() * 500)
@@ -61,6 +66,13 @@ class Player
         @mu = String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) )
         @md = String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) )
       else throw "Wrong player constructor."
+
+  AddBullet: (B)->
+    @Bullets[@countB] = B
+    @countB++
+
+  ChangeBullet: (B)->
+    if @Bullets[B.number]? then @Bullets[B.number] = B
 
   html: (v) ->
     if v is 0
@@ -139,17 +151,24 @@ class Enemy
 
 class Bullet
   constructor: (obj) ->
-    @name = "B"
-    @x = obj.x + 45
-    @y = obj.y - 30
+    if obj.MoveTo
+      @cr = obj.number
+      @name = "B_#{obj.number}"
+      @number = obj.countB
+      @x = obj.x + 45
+      @y = obj.y - 30
+    else
+      @cr = obj.cr
+      @name = obj.name
+      @number = obj.number
+      @x = obj.x
+      @y = obj.y
   Replace:()->
     @y-=10
-    console.log @y
-  html: () ->
-    """
-    <div id='#{@name}' class='bullet' style='background: rgb(#{255},#{208},#{255})'>#{@name}</div>
-    """
-# exports for client (window.) and server (require(...).)
+    console.log @name, @y
+  html:(v) ->
+    "<div id='#{@name}' class='bullet' style='background: rgb(#{255},#{208},#{255})'>#{@name}</div>"
+
 module?.exports =
   Player : Player
   Enemy  : Enemy
