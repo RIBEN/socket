@@ -23,11 +23,41 @@ do ($ = jQuery) -> $(document).ready(() ->
     w = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
     while(w == me.ml or w == me.mr or w == me.mu or w == me.md)
       w = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
-      console.log "testing continue"
-    console.log "lalala"
     w
-  funt=() -> console.log "пуля летит"
 
+
+  FindDistanceX = (p1, p2)->
+     x1 =p1.x + $('#'+p1.name).outerWidth()/2
+
+     y1 = p1.y + $('#'+p1.name).outerHeight()/2
+     x2 = p2.x + $('#' + p2.name).outerWidth()/2
+     y2 = p2.y - $('#' + p2.name).outerHeight()/2
+
+     d = Math.sqrt( (x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1) )
+     dx = Math.acos( (x2-x1)/d)*10
+     console.log "dx=" + dx
+     dx
+  FindDistanceY = (p1, p2)->
+    x1 =p1.x + $('#'+p1.name).outerWidth()/2
+
+    y1 = p1.y + $('#'+p1.name).outerHeight()/2
+    x2 = p2.x + $('#' + p2.name).outerWidth()/2
+    y2 = p2.y - $('#' + p2.name).outerHeight()/2
+
+    d = Math.sqrt( (x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1) )
+    dy = Math.asin( (y2-y1)/d)*10
+    console.log "dy=" + dy
+    dy
+
+  Location = (p1, p2)->
+    if p1.x<p2.x and p1.y>p2.y
+       return 1
+    if p1.x<p2.x and p1.y<p2.y
+       return 4
+    if p1.x>p2.x and p1.y<p2.y
+       return 3
+    if p1.x>p2.x and p1.y>p2.y
+       2
   setPlayerDiv = (pl) ->
     p = $('#' + pl.name)
     if p.length is 0
@@ -51,12 +81,12 @@ do ($ = jQuery) -> $(document).ready(() ->
   Wc = new World()
   console.log "Wc.name=" + Wc.name
   me = new Player()
-  en = new Enemy()
 
   socket.emit('add user', me)
 
-  socket.on('change name',(name)->
-    me.name = name
+  socket.on('change name',(number)->
+    me.number = number
+    me.name = me.number
   )
 
   socket.on('Shut Up And Take My World', (Ws) ->
@@ -79,7 +109,7 @@ do ($ = jQuery) -> $(document).ready(() ->
 #BULLET
   socket.on('bullet have been added',(pl) ->
     Wc.ChangePlayer(pl)
-    setBDiv( new Bullet(pl.Bullets[pl.countB]))
+    setBDiv( new Bullet(pl.Bullets[pl.countB-1]))
     console.log 'bullet have been added'
   )
 
@@ -89,10 +119,6 @@ do ($ = jQuery) -> $(document).ready(() ->
     console.log "bullet have been changed"
   )
 
-#ENEMY
-  socket.on('enemy have been added', (data) -> setPlayerDiv(new Enemy(data) ) )
-  socket.on('enemy have been changed', (data) -> setPlayerDiv(new Enemy(data) ))
-
   $("body").keydown((e) ->
     if e.keyCode == 32
       B = new Bullet(me)
@@ -100,14 +126,19 @@ do ($ = jQuery) -> $(document).ready(() ->
       me.AddBullet(B)
       socket.emit('add bullet',me)
       setBDiv(B)
-
+      r = Location(me, Wc.Players[1])
+      console.log "r=" + r
+      dx = FindDistanceX(me, Wc.Players[1])
+      console.log "cdx"+dx
+      dy = FindDistanceY(me, Wc.Players[1])
+      console.log "cdy"+dy
       D = setInterval(
         ()->
-            B.Replace()
+            B.Replace(dx, dy, r)
             me.ChangeBullet(B)
             socket.emit('add bullet',me)
             setBDiv(B)
-        ,1000,B)
+        ,1000,)
 
     if String.fromCharCode(e.keyCode) == me.ml
       me.MoveTo(1)

@@ -11,7 +11,7 @@
 
   (function($) {
     return $(document).ready(function() {
-      var ChangeWord, Wc, en, funt, me, setBDiv, setPlayerDiv, socket;
+      var ChangeWord, FindDistanceX, FindDistanceY, Location, Wc, me, setBDiv, setPlayerDiv, socket;
       socket = io.connect(document.URL.match(/^http:\/\/[^/]*/));
       /*
       Viewer=(obj)->
@@ -33,13 +33,44 @@
         w = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
         while (w === me.ml || w === me.mr || w === me.mu || w === me.md) {
           w = "" + (String.fromCharCode(Math.ceil(65 + Math.random() * 25)));
-          console.log("testing continue");
         }
-        console.log("lalala");
         return w;
       };
-      funt = function() {
-        return console.log("пуля летит");
+      FindDistanceX = function(p1, p2) {
+        var d, dx, x1, x2, y1, y2;
+        x1 = p1.x + $('#' + p1.name).outerWidth() / 2;
+        y1 = p1.y + $('#' + p1.name).outerHeight() / 2;
+        x2 = p2.x + $('#' + p2.name).outerWidth() / 2;
+        y2 = p2.y - $('#' + p2.name).outerHeight() / 2;
+        d = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        dx = Math.acos((x2 - x1) / d) * 10;
+        console.log("dx=" + dx);
+        return dx;
+      };
+      FindDistanceY = function(p1, p2) {
+        var d, dy, x1, x2, y1, y2;
+        x1 = p1.x + $('#' + p1.name).outerWidth() / 2;
+        y1 = p1.y + $('#' + p1.name).outerHeight() / 2;
+        x2 = p2.x + $('#' + p2.name).outerWidth() / 2;
+        y2 = p2.y - $('#' + p2.name).outerHeight() / 2;
+        d = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        dy = Math.asin((y2 - y1) / d) * 10;
+        console.log("dy=" + dy);
+        return dy;
+      };
+      Location = function(p1, p2) {
+        if (p1.x < p2.x && p1.y > p2.y) {
+          return 1;
+        }
+        if (p1.x < p2.x && p1.y < p2.y) {
+          return 4;
+        }
+        if (p1.x > p2.x && p1.y < p2.y) {
+          return 3;
+        }
+        if (p1.x > p2.x && p1.y > p2.y) {
+          return 2;
+        }
       };
       setPlayerDiv = function(pl) {
         var p;
@@ -68,10 +99,10 @@
       Wc = new World();
       console.log("Wc.name=" + Wc.name);
       me = new Player();
-      en = new Enemy();
       socket.emit('add user', me);
-      socket.on('change name', function(name) {
-        return me.name = name;
+      socket.on('change name', function(number) {
+        me.number = number;
+        return me.name = me.number;
       });
       socket.on('Shut Up And Take My World', function(Ws) {
         var pl, _i, _len, _ref;
@@ -94,7 +125,7 @@
       });
       socket.on('bullet have been added', function(pl) {
         Wc.ChangePlayer(pl);
-        setBDiv(new Bullet(pl.Bullets[pl.countB]));
+        setBDiv(new Bullet(pl.Bullets[pl.countB - 1]));
         return console.log('bullet have been added');
       });
       socket.on('bullet have been changed', function(B) {
@@ -102,26 +133,26 @@
         Wc.ChangeBullet(B);
         return console.log("bullet have been changed");
       });
-      socket.on('enemy have been added', function(data) {
-        return setPlayerDiv(new Enemy(data));
-      });
-      socket.on('enemy have been changed', function(data) {
-        return setPlayerDiv(new Enemy(data));
-      });
       return $("body").keydown(function(e) {
-        var B, D, _ref;
+        var B, D, dx, dy, r, _ref;
         if (e.keyCode === 32) {
           B = new Bullet(me);
           console.log(B.name, B.number);
           me.AddBullet(B);
           socket.emit('add bullet', me);
           setBDiv(B);
+          r = Location(me, Wc.Players[1]);
+          console.log("r=" + r);
+          dx = FindDistanceX(me, Wc.Players[1]);
+          console.log("cdx" + dx);
+          dy = FindDistanceY(me, Wc.Players[1]);
+          console.log("cdy" + dy);
           D = setInterval(function() {
-            B.Replace();
+            B.Replace(dx, dy, r);
             me.ChangeBullet(B);
             socket.emit('add bullet', me);
             return setBDiv(B);
-          }, 1000, B);
+          }, 1000);
         }
         if (String.fromCharCode(e.keyCode) === me.ml) {
           me.MoveTo(1);

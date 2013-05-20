@@ -27,7 +27,7 @@
 
   io = require('socket.io').listen(app);
 
-  app.listen(8080);
+  app.listen(12345);
 
   /*
     END server routine

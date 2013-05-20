@@ -45,6 +45,7 @@ class Player
         @Bullets = obj.Bullets
         @countB = obj.countB
         @name = obj.name
+        @number = obj.number
         @x = obj.x
         @y = obj.y
         @ml = obj.ml
@@ -102,16 +103,16 @@ class Player
     switch v
       when 1
         @x-=60
-        console.log "toLeft "+@x
+        console.log "toLeft "+ @x+" "+@y
       when 3
         @x+=60
-        console.log "toRight "+@x
+        console.log "toRight "+ @x+" "+@y
       when 2
         @y-=20
-        console.log "toUp "+@y
+        console.log "toUp "+ @x+" "+ @y
       when 4
         @y+=20
-        console.log "toDown "+@y
+        console.log "toDown "+ @x+" "+ @y
       else console.log "Fig"
 
 ###
@@ -124,58 +125,51 @@ class Player
       w
 ###
 
-class Enemy
-  constructor: (obj, x, y) ->
-    switch typeof obj
-      when 'string'
-        @name = obj
-        @x = x
-        @y = y
-      when 'object'
-        @name = obj.name
-        @x = obj.x
-        @y = obj.y
-      when 'undefined'
-        @name = "Enemy#{Math.ceil(Math.random() * 1000)}"
-        @x = Player.x
-        @y = Player.y
-        cd = "23"
-      else throw "Wrong enemy constructor."
-
-  html: () ->
-    "
-    <div id='#{@name}' class='player' style='background: rgb(#{0},#{208},#{255})'>#{@name}
-       <div id='#{@name}' class='player' style='background: rgb(#{50},#{255},#{20})'>#{@cd}</div>
-    </div>
-    "
-
 class Bullet
   constructor: (obj) ->
     if obj.MoveTo
       @cr = obj.number
-      @name = "B_#{obj.number}"
       @number = obj.countB
-      @x = obj.x + 45
-      @y = obj.y - 30
+      @name = "B_#{@cr}_#{@number}"
+
+      @x = obj.x
+      @y = obj.y
     else
       @cr = obj.cr
       @name = obj.name
       @number = obj.number
       @x = obj.x
       @y = obj.y
-  Replace:()->
-    @y-=10
-    console.log @name, @y
-  html:(v) ->
-    "<div id='#{@name}' class='bullet' style='background: rgb(#{255},#{208},#{255})'>#{@name}</div>"
+
+  Replace:(dx, dy, r)->
+    console.log "mr=" + r
+    console.log "beforBx=" + @x
+    console.log "beforBy=" + @y
+    switch r
+      when 1
+        @x=@x+dx
+        @y=@y-dy
+      when 2
+        @x=@x-dx
+        @y=@y-dy
+      when 3
+        @x=@x-dx
+        @y=@y+dy
+      when 4
+        @x=@x+dx
+        @y=@y+dy
+    console.log "afterBx=" + @x
+    console.log "afterBy=" + @y
+  html:() ->
+    "<div id='#{@name}' class='bullet' style='background: rgb(#{255},#{208},#{255})'>B_#{@cr}_#{@number}</div>"
 
 module?.exports =
   Player : Player
-  Enemy  : Enemy
+#  Enemy  : Enemy
   World  : World
   Bullet : Bullet
 window?.Player = Player
-window?.Enemy = Enemy
+#window?.Enemy = Enemy
 window?.World = World
 window?.Bullet = Bullet
 

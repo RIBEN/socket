@@ -15,7 +15,7 @@ app = require('http').createServer (req, res) ->
       res.end data
   )
 io = require('socket.io').listen app
-app.listen 8080
+app.listen 12345
 ###
   END server routine
 ###
@@ -28,7 +28,7 @@ io.sockets.on('connection', (socket) ->
   socket.on('add user', (pl) ->
     pl.name = pl.name + Ws.countP
     pl.number = Ws.countP
-    socket.emit('change name',pl.name)
+    socket.emit('change name',pl.number)
     Ws.AddPlayer(pl)
     socket.emit('Shut Up And Take My World', Ws)
     #players[player.name] = new model.Player(player.name, player.x, player.y)

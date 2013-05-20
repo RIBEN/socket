@@ -7,7 +7,7 @@
 
 
 (function() {
-  var Bullet, Enemy, Player, World;
+  var Bullet, Player, World;
 
   World = (function() {
     var Enemies;
@@ -70,6 +70,7 @@
           this.Bullets = obj.Bullets;
           this.countB = obj.countB;
           this.name = obj.name;
+          this.number = obj.number;
           this.x = obj.x;
           this.y = obj.y;
           this.ml = obj.ml;
@@ -117,16 +118,16 @@
       switch (v) {
         case 1:
           this.x -= 60;
-          return console.log("toLeft " + this.x);
+          return console.log("toLeft " + this.x + " " + this.y);
         case 3:
           this.x += 60;
-          return console.log("toRight " + this.x);
+          return console.log("toRight " + this.x + " " + this.y);
         case 2:
           this.y -= 20;
-          return console.log("toUp " + this.y);
+          return console.log("toUp " + this.x + " " + this.y);
         case 4:
           this.y += 20;
-          return console.log("toDown " + this.y);
+          return console.log("toDown " + this.x + " " + this.y);
         default:
           return console.log("Fig");
       }
@@ -147,49 +148,15 @@
   */
 
 
-  Enemy = (function() {
-
-    function Enemy(obj, x, y) {
-      var cd;
-      switch (typeof obj) {
-        case 'string':
-          this.name = obj;
-          this.x = x;
-          this.y = y;
-          break;
-        case 'object':
-          this.name = obj.name;
-          this.x = obj.x;
-          this.y = obj.y;
-          break;
-        case 'undefined':
-          this.name = "Enemy" + (Math.ceil(Math.random() * 1000));
-          this.x = Player.x;
-          this.y = Player.y;
-          cd = "23";
-          break;
-        default:
-          throw "Wrong enemy constructor.";
-      }
-    }
-
-    Enemy.prototype.html = function() {
-      return "    <div id='" + this.name + "' class='player' style='background: rgb(" + 0 + "," + 208 + "," + 255 + ")'>" + this.name + "       <div id='" + this.name + "' class='player' style='background: rgb(" + 50 + "," + 255 + "," + 20 + ")'>" + this.cd + "</div>    </div>    ";
-    };
-
-    return Enemy;
-
-  })();
-
   Bullet = (function() {
 
     function Bullet(obj) {
       if (obj.MoveTo) {
         this.cr = obj.number;
-        this.name = "B_" + obj.number;
         this.number = obj.countB;
-        this.x = obj.x + 45;
-        this.y = obj.y - 30;
+        this.name = "B_" + this.cr + "_" + this.number;
+        this.x = obj.x;
+        this.y = obj.y;
       } else {
         this.cr = obj.cr;
         this.name = obj.name;
@@ -199,13 +166,33 @@
       }
     }
 
-    Bullet.prototype.Replace = function() {
-      this.y -= 10;
-      return console.log(this.name, this.y);
+    Bullet.prototype.Replace = function(dx, dy, r) {
+      console.log("mr=" + r);
+      console.log("beforBx=" + this.x);
+      console.log("beforBy=" + this.y);
+      switch (r) {
+        case 1:
+          this.x = this.x + dx;
+          this.y = this.y - dy;
+          break;
+        case 2:
+          this.x = this.x - dx;
+          this.y = this.y - dy;
+          break;
+        case 3:
+          this.x = this.x - dx;
+          this.y = this.y + dy;
+          break;
+        case 4:
+          this.x = this.x + dx;
+          this.y = this.y + dy;
+      }
+      console.log("afterBx=" + this.x);
+      return console.log("afterBy=" + this.y);
     };
 
-    Bullet.prototype.html = function(v) {
-      return "<div id='" + this.name + "' class='bullet' style='background: rgb(" + 255 + "," + 208 + "," + 255 + ")'>" + this.name + "</div>";
+    Bullet.prototype.html = function() {
+      return "<div id='" + this.name + "' class='bullet' style='background: rgb(" + 255 + "," + 208 + "," + 255 + ")'>B_" + this.cr + "_" + this.number + "</div>";
     };
 
     return Bullet;
@@ -215,7 +202,6 @@
   if (typeof module !== "undefined" && module !== null) {
     module.exports = {
       Player: Player,
-      Enemy: Enemy,
       World: World,
       Bullet: Bullet
     };
@@ -223,10 +209,6 @@
 
   if (typeof window !== "undefined" && window !== null) {
     window.Player = Player;
-  }
-
-  if (typeof window !== "undefined" && window !== null) {
-    window.Enemy = Enemy;
   }
 
   if (typeof window !== "undefined" && window !== null) {
