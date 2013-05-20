@@ -20,6 +20,7 @@ do ($ = jQuery) -> $(document).ready(() ->
   console.log "Wc.name=" + Wc.name
   me = new Player()
   en = new Enemy()
+  wd = new Word()
 
   socket.emit('add user', me)
 
@@ -50,10 +51,12 @@ do ($ = jQuery) -> $(document).ready(() ->
   count = 0
   pl = 0
   pt = 0
+  ty=0
   wordsl = me.arraymove[me.i]
   wordsr = me.arraymove[me.j]
   wordsu = me.arraymove[me.m]
   wordsb = me.arraymove[me.l]
+  wordsm = me.arrayenemy[me.g]
 
   $("body").keydown((e) ->
     switch e.keyCode
@@ -66,19 +69,15 @@ do ($ = jQuery) -> $(document).ready(() ->
       when 40
         me.y += 10
 
-
-
-    if String.fromCharCode(e.keyCode) == wordsl.charAt(count)
-      count=count+1
-      if count == wordsl.length
-       count=0
-       me.x-=100
-       me.i=Math.ceil(Math.random()*30)
-       me.ml=me.arraymove[me.i]
-       wordsl=me.arraymove[me.i]
-    else if String.fromCharCode(e.keyCode) != wordsl.charAt(count)
-      count=0
-
+    wd.addWord('left',wordsl)
+    wd.newChar(e.charCode)
+    wd.addEventListener('left', () ->
+      me.l=Math.ceil(Math.random()*20)
+      wordsl=me.arraymove[me.l]
+      wd.addWord('left',wordsl)
+      alert('left entered')
+     )
+    me.x-=100
     setPlayerDiv(me)
     socket.emit('change user', me)
 
@@ -121,8 +120,16 @@ do ($ = jQuery) -> $(document).ready(() ->
     setPlayerDiv(me)
     socket.emit('change user', me)
 
+
+
     if 37 <= e.keyCode <= 40
         setPlayerDiv(me)
         socket.emit('change user', me)
   )
 )
+
+
+
+
+
+
