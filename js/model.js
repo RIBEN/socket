@@ -21,9 +21,9 @@
           this.name = "World" + (Math.ceil(Math.random() * 1000));
           this.Players = [];
           this.bx1 = 0;
-          this.bx2 = 1000;
+          this.bx2 = 100;
           this.by1 = 0;
-          this.by2 = 1000;
+          this.by2 = 100;
           break;
         default:
           this.Players = obj.Players;
@@ -155,8 +155,8 @@
         this.cr = obj.number;
         this.number = obj.countB;
         this.name = "B_" + this.cr + "_" + this.number;
-        this.x = obj.x;
-        this.y = obj.y;
+        this.x = obj.x + $('#' + obj.name).outerWidth() / 2;
+        this.y = obj.y + $('#' + obj.name).outerHeight() / 2;
       } else {
         this.cr = obj.cr;
         this.name = obj.name;
@@ -173,14 +173,14 @@
       switch (r) {
         case 1:
           this.x = this.x + dx;
-          this.y = this.y - dy;
+          this.y = this.y + dy;
           break;
         case 2:
-          this.x = this.x - dx;
-          this.y = this.y - dy;
+          this.x = this.x + dx;
+          this.y = this.y + dy;
           break;
         case 3:
-          this.x = this.x - dx;
+          this.x = this.x + dx;
           this.y = this.y + dy;
           break;
         case 4:
@@ -192,7 +192,7 @@
     };
 
     Bullet.prototype.html = function() {
-      return "<div id='" + this.name + "' class='bullet' style='background: rgb(" + 255 + "," + 208 + "," + 255 + ")'>B_" + this.cr + "_" + this.number + "</div>";
+      return "<div id='" + this.name + "' class='bullet' style='background: rgb(" + 255 + "," + 208 + "," + 255 + ")'></div>";
     };
 
     return Bullet;

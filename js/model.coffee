@@ -11,9 +11,9 @@ class World
         @name = "World#{Math.ceil(Math.random() * 1000)}"
         @Players = []
         @bx1 = 0
-        @bx2 = 1000
+        @bx2 = 100
         @by1 = 0
-        @by2 = 1000
+        @by2 = 100
       else
         @Players = obj.Players
         @countP = obj.countP
@@ -132,8 +132,8 @@ class Bullet
       @number = obj.countB
       @name = "B_#{@cr}_#{@number}"
 
-      @x = obj.x
-      @y = obj.y
+      @x = obj.x + $('#'+obj.name).outerWidth()/2
+      @y = obj.y + $('#'+obj.name).outerHeight()/2
     else
       @cr = obj.cr
       @name = obj.name
@@ -148,12 +148,12 @@ class Bullet
     switch r
       when 1
         @x=@x+dx
-        @y=@y-dy
+        @y=@y+dy
       when 2
-        @x=@x-dx
-        @y=@y-dy
+        @x=@x+dx
+        @y=@y+dy
       when 3
-        @x=@x-dx
+        @x=@x+dx
         @y=@y+dy
       when 4
         @x=@x+dx
@@ -161,7 +161,7 @@ class Bullet
     console.log "afterBx=" + @x
     console.log "afterBy=" + @y
   html:() ->
-    "<div id='#{@name}' class='bullet' style='background: rgb(#{255},#{208},#{255})'>B_#{@cr}_#{@number}</div>"
+    "<div id='#{@name}' class='bullet' style='background: rgb(#{255},#{208},#{255})'></div>"
 
 module?.exports =
   Player : Player

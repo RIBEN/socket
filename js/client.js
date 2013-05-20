@@ -11,7 +11,7 @@
 
   (function($) {
     return $(document).ready(function() {
-      var ChangeWord, FindDistanceX, FindDistanceY, Location, Wc, me, setBDiv, setPlayerDiv, socket;
+      var ChangeWord, FindDistanceX, FindDistanceY, Location, Terminator, Wc, me, setBDiv, setPlayerDiv, socket;
       socket = io.connect(document.URL.match(/^http:\/\/[^/]*/));
       /*
       Viewer=(obj)->
@@ -36,6 +36,16 @@
         }
         return w;
       };
+      Terminator = function(obj) {
+        if (obj.Replace && (obj.x >= 200 || obj.y >= 200)) {
+          console.log("ща удалим пулю");
+          $('#' + obj.name).remove();
+          return true;
+        } else {
+          console.log("пуля пока жива");
+          return false;
+        }
+      };
       FindDistanceX = function(p1, p2) {
         var d, dx, x1, x2, y1, y2;
         x1 = p1.x + $('#' + p1.name).outerWidth() / 2;
@@ -43,7 +53,7 @@
         x2 = p2.x + $('#' + p2.name).outerWidth() / 2;
         y2 = p2.y - $('#' + p2.name).outerHeight() / 2;
         d = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-        dx = Math.acos((x2 - x1) / d) * 10;
+        dx = Math.ceil(10 * (x2 - x1) / d);
         console.log("dx=" + dx);
         return dx;
       };
@@ -54,7 +64,7 @@
         x2 = p2.x + $('#' + p2.name).outerWidth() / 2;
         y2 = p2.y - $('#' + p2.name).outerHeight() / 2;
         d = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-        dy = Math.asin((y2 - y1) / d) * 10;
+        dy = Math.ceil(10 * (y2 - y1) / d);
         console.log("dy=" + dy);
         return dy;
       };
@@ -150,8 +160,12 @@
           D = setInterval(function() {
             B.Replace(dx, dy, r);
             me.ChangeBullet(B);
-            socket.emit('add bullet', me);
-            return setBDiv(B);
+            if (Terminator(B) === false) {
+              socket.emit('add bullet', me);
+              return setBDiv(B);
+            } else {
+              return clearInterval(D);
+            }
           }, 1000);
         }
         if (String.fromCharCode(e.keyCode) === me.ml) {

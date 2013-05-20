@@ -9,8 +9,8 @@
     <file path="/server.coffee" changelist="3893f024-e009-4195-a41f-63e0756a3b08" time="1369024950953" ignored="false" />
     <file path="/index.html" changelist="3893f024-e009-4195-a41f-63e0756a3b08" time="1366726297424" ignored="false" />
     <file path="/fragment.js" changelist="3893f024-e009-4195-a41f-63e0756a3b08" time="1364985298073" ignored="false" />
-    <file path="/client.coffee" changelist="3893f024-e009-4195-a41f-63e0756a3b08" time="1369050033727" ignored="false" />
-    <file path="/model.coffee" changelist="3893f024-e009-4195-a41f-63e0756a3b08" time="1369048931753" ignored="false" />
+    <file path="/client.coffee" changelist="3893f024-e009-4195-a41f-63e0756a3b08" time="1369056161369" ignored="false" />
+    <file path="/model.coffee" changelist="3893f024-e009-4195-a41f-63e0756a3b08" time="1369053390585" ignored="false" />
     <file path="/style.css" changelist="3893f024-e009-4195-a41f-63e0756a3b08" time="1368258984269" ignored="false" />
     <file path="/testing.html" changelist="3893f024-e009-4195-a41f-63e0756a3b08" time="1364988404075" ignored="false" />
     <file path="/tests.coffee" changelist="3893f024-e009-4195-a41f-63e0756a3b08" time="1364989675196" ignored="false" />
@@ -46,7 +46,7 @@
       <file leaf-file-name="client.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/client.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="33" selection-start="1746" selection-end="1746" vertical-scroll-proportion="0.671831">
+            <state line="27" column="2" selection-start="1072" selection-end="1072" vertical-scroll-proportion="0.028571429">
               <folding />
             </state>
           </provider>
@@ -55,7 +55,7 @@
       <file leaf-file-name="client.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/client.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="19" selection-start="1154" selection-end="1154" vertical-scroll-proportion="0.0">
+            <state line="78" column="19" selection-start="2899" selection-end="2899" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -73,18 +73,18 @@
       <file leaf-file-name="model.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/model.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="150" column="20" selection-start="4238" selection-end="4238" vertical-scroll-proportion="0.0">
+            <state line="132" column="34" selection-start="3913" selection-end="3913" vertical-scroll-proportion="0.0">
               <folding>
-                <marker date="1369050632000" expanded="true" signature="2091:2589" placeholder="..." />
-                <marker date="1369050632000" expanded="true" signature="2163:2535" placeholder="..." />
-                <marker date="1369050632000" expanded="false" signature="2200:2269" placeholder="..." />
-                <marker date="1369050632000" expanded="false" signature="2319:2386" placeholder="..." />
-                <marker date="1369050632000" expanded="false" signature="2439:2507" placeholder="..." />
-                <marker date="1369050632000" expanded="true" signature="2686:3050" placeholder="..." />
-                <marker date="1369050632000" expanded="false" signature="2721:2790" placeholder="..." />
-                <marker date="1369050632000" expanded="false" signature="2838:2905" placeholder="..." />
-                <marker date="1369050632000" expanded="false" signature="2956:3024" placeholder="..." />
-                <marker date="1369050632000" expanded="false" signature="4503:4540" placeholder="..." />
+                <marker date="1369055064000" expanded="true" signature="2089:2587" placeholder="..." />
+                <marker date="1369055064000" expanded="true" signature="2161:2533" placeholder="..." />
+                <marker date="1369055064000" expanded="false" signature="2198:2267" placeholder="..." />
+                <marker date="1369055064000" expanded="false" signature="2317:2384" placeholder="..." />
+                <marker date="1369055064000" expanded="false" signature="2437:2505" placeholder="..." />
+                <marker date="1369055064000" expanded="true" signature="2684:3048" placeholder="..." />
+                <marker date="1369055064000" expanded="false" signature="2719:2788" placeholder="..." />
+                <marker date="1369055064000" expanded="false" signature="2836:2903" placeholder="..." />
+                <marker date="1369055064000" expanded="false" signature="2954:3022" placeholder="..." />
+                <marker date="1369055064000" expanded="false" signature="4568:4605" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -93,7 +93,7 @@
       <file leaf-file-name="model.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/model.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="36" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0">
+            <state line="85" column="36" selection-start="2077" selection-end="2077" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -183,7 +183,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -194,119 +194,19 @@
       <autoscrollFromSource />
       <sortByType />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="socket" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="socket" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="socket" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="socket" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="socket" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server.coffee" />
-              <option name="myItemType" value="com.intellij.plugins.watcher.projectView.NestingTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="socket" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="socket" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="socket" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="socket" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model.coffee" />
-              <option name="myItemType" value="com.intellij.plugins.watcher.projectView.NestingTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="socket" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="socket" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client.coffee" />
-              <option name="myItemType" value="com.intellij.plugins.watcher.projectView.NestingTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="socket" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="socket" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="settings" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="options.lastSelected" value="settings" />
     <property name="restartRequiresConfirmation" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -400,7 +300,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="916" extended-state="6" />
+    <frame x="-8" y="-8" width="1616" height="916" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -410,7 +310,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13801453" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32937294" sideWeight="0.65625" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24455206" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="top" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15625" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="top" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15625" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -550,6 +450,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="36" selection-start="2077" selection-end="2077" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/client.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="78" column="19" selection-start="2899" selection-end="2899" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/server.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="30" selection-start="684" selection-end="684" vertical-scroll-proportion="0.0">
@@ -557,41 +471,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/model.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="36" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/client.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="19" selection-start="1154" selection-end="1154" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/model.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="150" column="20" selection-start="4238" selection-end="4238" vertical-scroll-proportion="0.0">
+        <state line="132" column="34" selection-start="3913" selection-end="3913" vertical-scroll-proportion="0.0">
           <folding>
-            <marker date="1369050632000" expanded="true" signature="2091:2589" placeholder="..." />
-            <marker date="1369050632000" expanded="true" signature="2163:2535" placeholder="..." />
-            <marker date="1369050632000" expanded="false" signature="2200:2269" placeholder="..." />
-            <marker date="1369050632000" expanded="false" signature="2319:2386" placeholder="..." />
-            <marker date="1369050632000" expanded="false" signature="2439:2507" placeholder="..." />
-            <marker date="1369050632000" expanded="true" signature="2686:3050" placeholder="..." />
-            <marker date="1369050632000" expanded="false" signature="2721:2790" placeholder="..." />
-            <marker date="1369050632000" expanded="false" signature="2838:2905" placeholder="..." />
-            <marker date="1369050632000" expanded="false" signature="2956:3024" placeholder="..." />
-            <marker date="1369050632000" expanded="false" signature="4503:4540" placeholder="..." />
+            <marker date="1369055064000" expanded="true" signature="2089:2587" placeholder="..." />
+            <marker date="1369055064000" expanded="true" signature="2161:2533" placeholder="..." />
+            <marker date="1369055064000" expanded="false" signature="2198:2267" placeholder="..." />
+            <marker date="1369055064000" expanded="false" signature="2317:2384" placeholder="..." />
+            <marker date="1369055064000" expanded="false" signature="2437:2505" placeholder="..." />
+            <marker date="1369055064000" expanded="true" signature="2684:3048" placeholder="..." />
+            <marker date="1369055064000" expanded="false" signature="2719:2788" placeholder="..." />
+            <marker date="1369055064000" expanded="false" signature="2836:2903" placeholder="..." />
+            <marker date="1369055064000" expanded="false" signature="2954:3022" placeholder="..." />
+            <marker date="1369055064000" expanded="false" signature="4568:4605" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/client.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="33" selection-start="1746" selection-end="1746" vertical-scroll-proportion="0.671831">
+        <state line="27" column="2" selection-start="1072" selection-end="1072" vertical-scroll-proportion="0.028571429">
           <folding />
         </state>
       </provider>

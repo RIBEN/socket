@@ -25,6 +25,14 @@ do ($ = jQuery) -> $(document).ready(() ->
       w = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
     w
 
+  Terminator = (obj)->
+    if obj.Replace and (obj.x>=200 or obj.y>=200)
+      console.log "ща удалим пулю"
+      $('#'+obj.name).remove()
+      true
+    else
+      console.log "пуля пока жива"
+      false
 
   FindDistanceX = (p1, p2)->
      x1 =p1.x + $('#'+p1.name).outerWidth()/2
@@ -34,7 +42,7 @@ do ($ = jQuery) -> $(document).ready(() ->
      y2 = p2.y - $('#' + p2.name).outerHeight()/2
 
      d = Math.sqrt( (x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1) )
-     dx = Math.acos( (x2-x1)/d)*10
+     dx = Math.ceil(10*(x2-x1)/d)
      console.log "dx=" + dx
      dx
   FindDistanceY = (p1, p2)->
@@ -45,7 +53,7 @@ do ($ = jQuery) -> $(document).ready(() ->
     y2 = p2.y - $('#' + p2.name).outerHeight()/2
 
     d = Math.sqrt( (x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1) )
-    dy = Math.asin( (y2-y1)/d)*10
+    dy = Math.ceil(10*(y2-y1)/d)
     console.log "dy=" + dy
     dy
 
@@ -136,8 +144,10 @@ do ($ = jQuery) -> $(document).ready(() ->
         ()->
             B.Replace(dx, dy, r)
             me.ChangeBullet(B)
-            socket.emit('add bullet',me)
-            setBDiv(B)
+            if (Terminator(B) == false)
+                socket.emit('add bullet',me)
+                setBDiv(B)
+            else clearInterval(D)
         ,1000,)
 
     if String.fromCharCode(e.keyCode) == me.ml
