@@ -44,11 +44,12 @@ class Word
       func : null
 
 
-  newChar: (character) ->
+  newChar: (char) ->
     for W in @words
-
+     if char == str.charAt(W.i)
       W.i++
       if (W.i == W.str.length)
+        W.i=0
         W.func()
 
   addEventListener: (Name, callbackFunc) ->
@@ -57,8 +58,8 @@ class Word
 
 class Player
   constructor: (obj, x, y) ->
-    @arraymove=["LOOK","WARRIOR","VOLUME","RUN","DEVIL","NOTE","ANDROID","COFFEE","SCRIPT","APPLE","BANG","GOOGLE","JOKE","ATOM","BASE","BEGIN","MEMENTO","BREEZE","CARRY","CHECK","DANCE","UNIT","OTHER","HARD","CAPTURE",
-    "CONTRACT","SWAP","POWER","TED","PICTURE","TIME"]
+    @arraymove=["LOOK","WARRIOR","VOLUME","RUN","DEVIL","NOTE","ANDROID","COFFEE","SCRIPT","APPLE","BANG","GOOGLE","JOKE","ATOM","BASE",
+                "BEGIN","MEMENTO","BREEZE","CARRY","CHECK","DANCE","UNIT","OTHER","HARD","CAPTURE","CONTRACT","SWAP","POWER","TED","PICTURE","TIME"]
     @arrayenemy=["HUNTER","MOBILE","VOID","GREAT"]
     switch typeof obj
       when 'string'
