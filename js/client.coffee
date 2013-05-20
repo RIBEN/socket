@@ -69,17 +69,19 @@ do ($ = jQuery) -> $(document).ready(() ->
       when 40
         me.y += 10
 
-    wd.addWord('left',wordsl)
-    wd.newChar(e.charCode)
-    wd.addEventListener('left', () ->
+    wd.addWord($("div.left"),wordsl)
+
+
+    wd.addEventListener($("div.left"), () ->
+      wd.addWord($("div.left"),wordsl)
+      wd.newChar(e.charCode)
+      me.x-=100
       me.l=Math.ceil(Math.random()*20)
       wordsl=me.arraymove[me.l]
-      wd.addWord('left',wordsl)
-      alert('left entered')
-     )
-    me.x-=100
-    setPlayerDiv(me)
-    socket.emit('change user', me)
+      wd.addWord($("div.left"),wordsl)
+      setPlayerDiv(me)
+      socket.emit('change user', me))
+
 
     if String.fromCharCode(e.keyCode) == wordsr.charAt(ps)
       ps=ps+1
