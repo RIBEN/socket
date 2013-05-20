@@ -34,11 +34,32 @@ class World
   ChangePlayer: (pl)->
     if @Players[pl.number]? then @Players[pl.number] = pl
 
+class Word
+  constructor: () ->
+
+  addWord:(Name, word) ->
+    @words[Name] =
+      str  : word
+      i    : 0
+      func : null
+
+
+  newChar: (character) ->
+    for W in @words
+
+      W.i++
+      if (W.i == W.str.length)
+        W.func()
+
+  addEventListener: (Name, callbackFunc) ->
+    @words[Name].func = callbackFunc
+
+
 class Player
   constructor: (obj, x, y) ->
     @arraymove=["LOOK","WARRIOR","VOLUME","RUN","DEVIL","NOTE","ANDROID","COFFEE","SCRIPT","APPLE","BANG","GOOGLE","JOKE","ATOM","BASE","BEGIN","MEMENTO","BREEZE","CARRY","CHECK","DANCE","UNIT","OTHER","HARD","CAPTURE",
     "CONTRACT","SWAP","POWER","TED","PICTURE","TIME"]
-    @array=["HUNTER"]
+    @arrayenemy=["HUNTER","MOBILE","VOID","GREAT"]
     switch typeof obj
       when 'string'
         @name = obj
@@ -46,15 +67,23 @@ class Player
         @y = y
         @ml = @array[@i]
         @mr = @array[@j]
+        @md = @array[@l]
+        @mu = @array[@m]
+        @unit=@arrayenemy[@g]
       when 'object'
         @name = obj.name
         @x = obj.x
         @y = obj.y
         @ml = obj.ml
         @mr = obj.mr
+        @mu = obj.mu
+        @md = obj.md
+        @unit=obj.unit
       when 'undefined'
         @number = 0
-        @name = "Player_"
+        @g=Math.ceil(Math.random() * 3)
+        @name ="Player_"
+        @unit=@arrayenemy[@g]
         @x = Math.ceil(Math.random() * 500)
         @y = Math.ceil(Math.random() * 500)
         @i= Math.ceil(Math.random() * 30)
@@ -63,18 +92,18 @@ class Player
         @m= Math.ceil(Math.random() * 30)
         @ml = @arraymove[@i]
         @mr = @arraymove[@j]
-        @md = @arraymove[@l]
         @mu = @arraymove[@m]
+        @md = @arraymove[@l]
       else throw "Wrong player constructor."
 
   html: (v) ->
     if v is 0
       """
       <div id='#{@name}' class='player'>
-      <div class='top' style='background:rgb(#{50},#{255},#{20});width: 70px;'>#{@mu}</div>
+      <div class='top' style='background:rgb(#{50},#{255},#{20});width:70px;'>#{@mu}</div>
       <div class='middle_line'>
       <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 70px;'>#{@ml}</div>
-      <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
+      <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@unit}</div>
       <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 70px;'>#{@mr}</div>
       </div>
       <div class='bottom' style='background:rgb(#{50},#{255},#{20});width: 70px;'>#{@md}</div>
@@ -85,12 +114,11 @@ class Player
       <div class='top' style='background:rgb(#{50},#{255},#{20});width: 70px;'>#{@mu}</div>
       <div class='middle_line'>
       <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 70px;'>#{@ml}</div>
-      <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@name}</div>
+      <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@unit}</div>
       <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:70px;'>#{@mr}</div>
       </div>
       <div class='bottom' style='background:rgb(#{50},#{255},#{20});width: 70px;'>#{@md}</div>
       """
-
 class Enemy
   constructor: (obj, x, y) ->
     switch typeof obj
@@ -134,7 +162,9 @@ module?.exports =
   Enemy  : Enemy
   World  : World
   Bullet : Bullet
+    Word :Word
 window?.Player = Player
+window?.Word = Word
 window?.Enemy = Enemy
 window?.World = World
 window?.Bullet = Bullet
