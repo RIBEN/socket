@@ -35,23 +35,46 @@ class World
     if @Players[pl.number]? then @Players[pl.number] = pl
 
 class Word
-  constructor: () ->
+  constructor: (@words=[],@wordsEn=[]) ->
+
+  addWordEn:(Name, word) ->
+    @wordsEn[Name] =
+      str  : word
+      i    : 0
+      funcE : @wordsEn[Name]?.funcE
+
+  newCharT: (char) ->
+    for i, W of @wordsEn
+      if char == W.str.charAt(W.i)
+        W.i++
+        if (W.i == W.str.length)
+          W.i=0
+          W.funcE()
+      else
+        if char != W.str.charAt(W.i)
+          W.i=0
+  addEventListenerE: (Name, callbackFunc) ->
+    @wordsEn[Name].funcE = callbackFunc
+
+
 
   addWord:(Name, word) ->
     @words[Name] =
       str  : word
       i    : 0
-      func : null
+      func : @words[Name]?.func
 
 
   newChar: (char) ->
-    for W in @words
-     if char == str.charAt(W.i)
-      W.i++
-      if (W.i == W.str.length)
-        W.i=0
-        W.func()
-
+    for i, W of @words
+      if char == W.str.charAt(W.i)
+        W.i++
+        if (W.i == W.str.length)
+          W.i=0
+          W.func()
+       else
+        if char != W.str.charAt(W.i)
+            W.i=0
   addEventListener: (Name, callbackFunc) ->
     @words[Name].func = callbackFunc
 
@@ -59,8 +82,8 @@ class Word
 class Player
   constructor: (obj, x, y) ->
     @arraymove=["LOOK","WARRIOR","VOLUME","RUN","DEVIL","NOTE","ANDROID","COFFEE","SCRIPT","APPLE","BANG","GOOGLE","JOKE","ATOM","BASE",
-                "BEGIN","MEMENTO","BREEZE","CARRY","CHECK","DANCE","UNIT","OTHER","HARD","CAPTURE","CONTRACT","SWAP","POWER","TED","PICTURE","TIME"]
-    @arrayenemy=["HUNTER","MOBILE","VOID","GREAT"]
+                "BEGIN","MEMENTO","BREEZE","CARRY","CHECK","DANCE","UNIT","OTHER","HARD","CAPTURE","CONTRA","SWAP","POWER","TED","PICTURE","TIME",]
+    @arrayenemy=["HUNTER","MOBILE","VOID","GREAT","EDITION","CANON","AGES","BLOOD","THIS","FLASH","BROKE","REPORT","CLICK","MOUSES","INSERT","TABLE","PUSH"]
     switch typeof obj
       when 'string'
         @name = obj
@@ -82,15 +105,15 @@ class Player
         @unit=obj.unit
       when 'undefined'
         @number = 0
-        @g=Math.ceil(Math.random() * 3)
+        @g=Math.ceil(Math.random() *7)
         @name ="Player_"
         @unit=@arrayenemy[@g]
         @x = Math.ceil(Math.random() * 500)
         @y = Math.ceil(Math.random() * 500)
-        @i= Math.ceil(Math.random() * 30)
-        @j= Math.ceil(Math.random() * 30)
-        @l= Math.ceil(Math.random() * 30)
-        @m= Math.ceil(Math.random() * 30)
+        @i= Math.ceil(Math.random() * 9)
+        @j= Math.ceil(10 + Math.random() * 5 )
+        @l= Math.ceil(16 + Math.random() * 5)
+        @m= Math.ceil(22+ Math.random() * 7)
         @ml = @arraymove[@i]
         @mr = @arraymove[@j]
         @mu = @arraymove[@m]
@@ -163,7 +186,7 @@ module?.exports =
   Enemy  : Enemy
   World  : World
   Bullet : Bullet
-    Word :Word
+  Word   : Word
 window?.Player = Player
 window?.Word = Word
 window?.Enemy = Enemy
