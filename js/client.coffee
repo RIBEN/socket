@@ -1,8 +1,6 @@
 do ($ = jQuery) -> $(document).ready(() ->
   socket = io.connect(document.URL.match(/^http:\/\/[^/]*/))
 
-
-
   setPlayerDiv = (pl) ->
     p = $('#' + pl.name)
     if p.length is 0
@@ -14,6 +12,11 @@ do ($ = jQuery) -> $(document).ready(() ->
     p.css('left', pl.x + 'px')
     p.css('top',  pl.y + 'px')
 
+  ChangeWord = ()->
+    w =(Math.ceil(Math.random()* 30))
+    while(w == me.i or w == me.j or w == me.l or w == me.m)
+     w =(Math.ceil(Math.random()* 30))
+    w
 
 
   Wc = new World()
@@ -47,27 +50,75 @@ do ($ = jQuery) -> $(document).ready(() ->
 
   socket.on('enemy have been added', (data) -> setPlayerDiv(new Enemy(data) ) )
   socket.on('enemy have been changed', (data) -> setPlayerDiv(new Enemy(data) ))
-  ps = 0
-  count = 0
-  pl = 0
-  pt = 0
-  ty=0
+
   wordsl = me.arraymove[me.i]
   wordsr = me.arraymove[me.j]
   wordsu = me.arraymove[me.m]
   wordsb = me.arraymove[me.l]
-  wordsm = me.arrayenemy[me.g]
+  i=0
+
+
+  (
+    wordsm = pl.arrayenemy[pl.g]
+    wd.addWordEn('main',wordsm)
+  ) for pl in Wc.Players when pl.unit isnt me.unit
 
   wd.addWord('left',wordsl)
+  wd.addWord('right',wordsr)
+  wd.addWord('top',wordsu)
+  wd.addWord('bottom',wordsb)
 
+
+
+  wd.addEventListenerE('main', () ->
+
+
+
+    me.x-=7
+    me.g=Math.ceil(Math.random()* 16)
+    me.unit=me.arrayenemy[me.g]
+    wordsm=me.arrayenemy[me.g]
+    wd.addWord('main',wordsm)
+    setPlayerDiv(me)
+    socket.emit('change user', me))
 
   wd.addEventListener('left', () ->
-    me.x-=100
-    me.l=Math.ceil(Math.random()*20)
-    wordsl=me.arraymove[me.l]
+    me.x-=50
+    me.i=ChangeWord()
+    me.ml=me.arraymove[me.i]
+    wordsl=me.arraymove[me.i]
     wd.addWord('left',wordsl)
     setPlayerDiv(me)
     socket.emit('change user', me))
+
+  wd.addEventListener('right', () ->
+    me.x+=50
+    me.j=ChangeWord()
+    me.mr=me.arraymove[me.j]
+    wordsr=me.arraymove[me.j]
+    wd.addWord('right',wordsr)
+    setPlayerDiv(me)
+    socket.emit('change user', me))
+
+  wd.addEventListener('top', () ->
+    me.y-=50
+    me.m=ChangeWord()
+    me.mu=me.arraymove[me.m]
+    wordsu=me.arraymove[me.m]
+    wd.addWord('top',wordsu)
+    setPlayerDiv(me)
+    socket.emit('change user', me))
+
+  wd.addEventListener('bottom', () ->
+    me.y+=50
+    me.l=ChangeWord()
+    me.md=me.arraymove[me.l]
+    wordsb=me.arraymove[me.l]
+    wd.addWord('bottom',wordsb)
+    setPlayerDiv(me)
+    socket.emit('change user', me))
+
+
 
 
   $("body").keydown((e) ->
@@ -81,56 +132,15 @@ do ($ = jQuery) -> $(document).ready(() ->
       when 40
         me.y += 10
 
+    wd.newChar(String.fromCharCode(e.keyCode))
 
-    wd.newChar(e.charCode)
-
-    if String.fromCharCode(e.keyCode) == wordsr.charAt(ps)
-      ps=ps+1
-      if ps == wordsr.length
-        ps=0
-        me.x+=100
-        me.j=Math.ceil(Math.random()*30)
-        me.mr=me.arraymove[me.j]
-        wordsr=me.arraymove[me.j]
-    else if String.fromCharCode(e.keyCode) != wordsr.charAt(count)
-      ps=0
-    setPlayerDiv(me)
-    socket.emit('change user', me)
-
-    if String.fromCharCode(e.keyCode) == wordsu.charAt(pl)
-      pl=pl+1
-      if pl == wordsu.length
-        pl=0
-        me.y-=100
-        me.m=Math.ceil(Math.random()*20)
-        me.mu=me.arraymove[me.m]
-        wordsu=me.arraymove[me.m]
-    else if String.fromCharCode(e.keyCode) != wordsu.charAt(count)
-      pl=0
-    setPlayerDiv(me)
-    socket.emit('change user', me)
-
-    if String.fromCharCode(e.keyCode) == wordsb.charAt(pt)
-      pt=pt+1
-      if pt == wordsb.length
-        pt=0
-        me.y+=100
-        me.l=Math.ceil(Math.random()*20)
-        me.md=me.arraymove[me.l]
-        wordsb=me.arraymove[me.l]
-    else if String.fromCharCode(e.keyCode) != wordsb.charAt(count)
-      pt=0
-    setPlayerDiv(me)
-    socket.emit('change user', me)
-
-
+    wd.newCharT(String.fromCharCode(e.keyCode))
 
     if 37 <= e.keyCode <= 40
       setPlayerDiv(me)
       socket.emit('change user', me)
     )
 )
-
 
 
 
