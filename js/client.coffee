@@ -10,7 +10,7 @@ do ($ = jQuery) -> $(document).ready(() ->
       p = $('#' + pl.name)
     else
       p = p.html(pl.html(1))
-      #p = $(p).replaceWith(pl.html())
+    #p = $(p).replaceWith(pl.html())
     p.css('left', pl.x + 'px')
     p.css('top',  pl.y + 'px')
 
@@ -58,6 +58,18 @@ do ($ = jQuery) -> $(document).ready(() ->
   wordsb = me.arraymove[me.l]
   wordsm = me.arrayenemy[me.g]
 
+  wd.addWord('left',wordsl)
+
+
+  wd.addEventListener('left', () ->
+    me.x-=100
+    me.l=Math.ceil(Math.random()*20)
+    wordsl=me.arraymove[me.l]
+    wd.addWord('left',wordsl)
+    setPlayerDiv(me)
+    socket.emit('change user', me))
+
+
   $("body").keydown((e) ->
     switch e.keyCode
       when 37
@@ -69,19 +81,8 @@ do ($ = jQuery) -> $(document).ready(() ->
       when 40
         me.y += 10
 
-    wd.addWord($("div.left"),wordsl)
 
-
-    wd.addEventListener($("div.left"), () ->
-      wd.addWord($("div.left"),wordsl)
-      wd.newChar(e.charCode)
-      me.x-=100
-      me.l=Math.ceil(Math.random()*20)
-      wordsl=me.arraymove[me.l]
-      wd.addWord($("div.left"),wordsl)
-      setPlayerDiv(me)
-      socket.emit('change user', me))
-
+    wd.newChar(e.charCode)
 
     if String.fromCharCode(e.keyCode) == wordsr.charAt(ps)
       ps=ps+1
@@ -125,9 +126,9 @@ do ($ = jQuery) -> $(document).ready(() ->
 
 
     if 37 <= e.keyCode <= 40
-        setPlayerDiv(me)
-        socket.emit('change user', me)
-  )
+      setPlayerDiv(me)
+      socket.emit('change user', me)
+    )
 )
 
 
