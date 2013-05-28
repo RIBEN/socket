@@ -4,98 +4,54 @@
 
 class World
   Enemies = {}
-  Bullets = {}
   constructor : (obj) ->
     switch typeof obj
       when 'undefined'
-        @count = 0
-        @name = "World#{Math.ceil(Math.random() *500)}"
+        @countP = 0
+        @name = "World#{Math.ceil(Math.random() * 1000)}"
         @Players = []
         @bx1 = 0
         @bx2 = 1000
         @by1 = 0
         @by2 = 1000
       else
-         @Players = obj.Players
-         @count = obj.count
-         @name = obj.name
-         @bx1 = obj.bx1
-         @bx2 = obj.bx2
-         @by1 = obj.by1
-         @by2 = obj.by2
+        @Players = obj.Players
+        @countP = obj.countP
+        @name = obj.name
+        @bx1 = obj.bx1
+        @bx2 = obj.bx2
+        @by1 = obj.by1
+        @by2 = obj.by2
   AddPlayer: (pl) ->
-    @Players[@count] = pl
-    @count++
+    @Players[@countP] = pl
+    @countP++
   AddEnemy: (en)->
     #Enemies.push(en)
-  AddBullet: (bullet)->
-    #Bullets.push(bullet)
   constructor
   ChangePlayer: (pl)->
     if @Players[pl.number]? then @Players[pl.number] = pl
 
-class Word
-  constructor: (@words=[],@wordsEn=[]) ->
-
-  addWordEn:(Name, word) ->
-    @wordsEn[Name] =
-      str  : word
-      i    : 0
-      funcE : @wordsEn[Name]?.funcE
-
-  newCharT: (char) ->
-    for i, W of @wordsEn
-      if char == W.str.charAt(W.i)
-        W.i++
-        if (W.i == W.str.length)
-          W.i=0
-          W.funcE()
-      else
-        if char != W.str.charAt(W.i)
-          W.i=0
-  addEventListenerE: (Name, callbackFunc) ->
-    @wordsEn[Name].funcE = callbackFunc
-
-
-
-  addWord:(Name, word) ->
-    @words[Name] =
-      str  : word
-      i    : 0
-      func : @words[Name]?.func
-
-
-  newChar: (char) ->
-    for i, W of @words
-      if char == W.str.charAt(W.i)
-        W.i++
-        if (W.i == W.str.length)
-          W.i=0
-          W.func()
-       else
-        if char != W.str.charAt(W.i)
-            W.i=0
-  addEventListener: (Name, callbackFunc) ->
-    @words[Name].func = callbackFunc
-
 
 class Player
-  constructor: (obj, x, y) ->
+  constructor: (obj) ->
     @arraymove=["LOOK","WARRIOR","VOLUME","RUN","DEVIL","NOTE","ANDROID","COFFEE","SCRIPT","APPLE","BANG","GOOGLE","JOKE","ATOM","BASE",
                 "BEGIN","MEMENTO","BREEZE","CARRY","CHECK","DANCE","UNIT","OTHER","HARD","CAPTURE","CONTRA","SWAP","POWER","TED","PICTURE","TIME",]
     @arrayenemy=["HUNTER","MOBILE","VOID","GREAT","EDITION","CANON","AGES","BLOOD","THIS","FLASH","BROKE","REPORT","CLICK","MOUSES","INSERT","TABLE","PUSH"]
     switch typeof obj
       when 'string'
         @name = obj
-        @x = x
-        @y = y
+        @x = obj.x
+        @y = obj.y
         @ml = @array[@i]
         @mr = @array[@j]
         @md = @array[@l]
         @mu = @array[@m]
-        @unit=@arrayenemy[@g]
+        @unit = @arrayenemy[@g]
       when 'object'
+        @Bullets = obj.Bullets
+        @countB = obj.countB
         @name = obj.name
+        @number = obj.number
         @x = obj.x
         @y = obj.y
         @ml = obj.ml
@@ -104,93 +60,169 @@ class Player
         @md = obj.md
         @unit=obj.unit
       when 'undefined'
-        @number = 0
-        @g=Math.ceil(Math.random() *7)
-        @name ="Player_"
+        @Bullets = []
+        @countB = 0
+        @g = Math.ceil(Math.random() *7)
         @unit=@arrayenemy[@g]
+
+        @number = 0
+        @name = "Player_"
         @x = Math.ceil(Math.random() * 500)
         @y = Math.ceil(Math.random() * 500)
+
         @i= Math.ceil(Math.random() * 9)
         @j= Math.ceil(10 + Math.random() * 5 )
         @l= Math.ceil(16 + Math.random() * 5)
         @m= Math.ceil(22+ Math.random() * 7)
+
         @ml = @arraymove[@i]
         @mr = @arraymove[@j]
         @mu = @arraymove[@m]
         @md = @arraymove[@l]
       else throw "Wrong player constructor."
 
+  AddBullet: (B)->
+    @Bullets[@countB] = B
+    @countB++
+
+  ChangeBullet: (B)->
+    if @Bullets[B.number]? then @Bullets[B.number] = B
+
   html: (v) ->
     if v is 0
       """
-      <div id='#{@name}' class='player'>
-      <div class='top' style='background:rgb(#{50},#{255},#{20});width:70px;'>#{@mu}</div>
-      <div class='middle_line'>
-      <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 70px;'>#{@ml}</div>
-      <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@unit}</div>
-      <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 70px;'>#{@mr}</div>
-      </div>
-      <div class='bottom' style='background:rgb(#{50},#{255},#{20});width: 70px;'>#{@md}</div>
+      <div class='main'>
+        <div id='#{@name}' class='player'>
+          <div class='topblock'>#{@mu}</div>
+          <div class='leftblock'>#{@ml}</div>
+          <div class='centerblock'>#{@unit}</div>
+          <div class='rightblock'>#{@mr}</div>
+          <div class='bottomblock'>#{@md}</div>
+        </div>
       </div>
       """
+
     else
+
       """
-      <div class='top' style='background:rgb(#{50},#{255},#{20});width: 70px;'>#{@mu}</div>
-      <div class='middle_line'>
-      <div class='left' style='background:rgb(#{50},#{255},#{20});display: inline-block;width: 70px;'>#{@ml}</div>
-      <div class="main" style='background:rgb(#{255},#{0},#{0});display: inline-block;width: 70px;'>#{@unit}</div>
-      <div class='right' style='background:rgb(#{50},#{255},#{20});display: inline-block;width:70px;'>#{@mr}</div>
+      <div class='main'>
+        <div id='#{@name}' class='player'>
+          <div class='topblock'>#{@mu}</div>
+          <div class='leftblock'>#{@ml}</div>
+          <div class='centerblock'>#{@unit}</div>
+          <div class='rightblock'>#{@mr}</div>
+          <div class='bottomblock'>#{@md}</div>
+        </div>
       </div>
-      <div class='bottom' style='background:rgb(#{50},#{255},#{20});width: 70px;'>#{@md}</div>
       """
-class Enemy
-  constructor: (obj, x, y) ->
-    switch typeof obj
-      when 'string'
-        @name = obj
-        @x = x
-        @y = y
-      when 'object'
-        @name = obj.name
-        @x = obj.x
-        @y = obj.y
-      when 'undefined'
-        @name = "Enemy#{Math.ceil(Math.random()*100)}"
-        @x = Player.x
-        @y = Player.y
-        @cd = "23"
-      else throw "Wrong enemy constructor."
 
 
-  html: () ->
-    "
-    <div id='#{@name}' class='player' style='background: rgb(#{0},#{208},#{255})'>#{@name}
-       <div id='#{@name}' class='player' style='background: rgb(#{50},#{255},#{20})'>#{@cd}</div>
-    </div>
-    "
+
+  MoveTo: (v) ->
+    @n = 60
+    switch v
+      when 1
+        @x-=@n
+        console.log @number + "toLeft "+ @x+" "+@y
+      when 3
+        @x+=@n
+        console.log @number + "toRight "+ @x+" "+@y
+      when 2
+        @y-=@n
+        console.log @number + "toUp "+ @x+" "+@y
+      when 4
+        @y+=@n
+        console.log @number + "toDown "+ @x+" "+@y
+      else console.log "Fig"
+
+###
+@ChangeWord: ()->
+      w = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+      while(w == Player.ml or w == Player.mr or w == Player.mu or w == Player.md)
+        w = "#{ String.fromCharCode(Math.ceil(65 + Math.random() * 25  ) ) }"
+        console.log "testing continue"
+      console.log "lalala"
+      w
+###
+
+class Word
+  constructor:(@words=[]) ->
+  addWord:(Name, word) ->
+    @words[Name] =
+      str  : word
+      i    : 0
+      func : @words[Name]?.func
+
+  newChar:(char) ->
+    for i, W of @words
+      if char == W.str.charAt(W.i)
+        W.i++
+        if (W.i == W.str.length)
+          W.i=0
+          W.func()
+      else
+        if char != W.str.charAt(W.i)
+          W.i=0
+  addEventListener:(Name, callbackFunc) ->
+     @words[Name].func = callbackFunc
+
+class Point
+   constructor:(x1,y1,n)->
+     @name="Point_"+n
+     @x=x1
+     @y=y1
+     @number=n
+   html:()->
+      "<div id='#{@number}' class='point' style='background: rgb(#{255},#{0},#{0})'>#{@number}</div>"
+
 
 class Bullet
   constructor: (obj) ->
-    @name = "B"
-    @x = obj.x + 45
-    @y = obj.y - 30
-  Replace:()->
-    b.y+=10
-  html: () ->
-    """
-    <div id='#{@name}' class='bullet' style='background: rgb(#{255},#{208},#{255})'>#{@name}</div>
-    """
-# exports for client (window.) and server (require(...).)
+    if obj.MoveTo
+      @cr = obj.number
+      @number = obj.countB
+      @name = "B_#{@cr}_#{@number}"
+
+      @x = obj.x
+      @y = obj.y
+    else
+      @cr = obj.cr
+      @name = obj.name
+      @number = obj.number
+      @x = obj.x
+      @y = obj.y
+
+  Replace:(dx, dy, r)->
+    console.log "beforBx=" + @x
+    console.log "beforBy=" + @y
+    switch r
+      when 1
+        @x=@x+dx
+        @y=@y+dy
+      when 2
+        @x=@x+dx
+        @y=@y+dy
+      when 3
+        @x=@x+dx
+        @y=@y+dy
+      when 4
+        @x=@x+dx
+        @y=@y+dy
+    console.log "afterBx=" + @x
+    console.log "afterBy=" + @y
+  html:() ->
+    "<div id='#{@name}' class='bullet' style='background: rgb(#{255},#{208},#{255})'>B</div>"
+
 module?.exports =
   Player : Player
-  Enemy  : Enemy
+#  Enemy  : Enemy
   World  : World
-  Bullet : Bullet
   Word   : Word
+  Bullet : Bullet
+  Point : Point
 window?.Player = Player
-window?.Word = Word
-window?.Enemy = Enemy
+#window?.Enemy = Enemy
 window?.World = World
+window?.Word = Word
 window?.Bullet = Bullet
-
-
+window?.Point = Point
