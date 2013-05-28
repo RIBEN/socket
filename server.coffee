@@ -15,32 +15,47 @@ app = require('http').createServer (req, res) ->
       res.end data
   )
 io = require('socket.io').listen app
-app.listen 8080
+app.listen 6060
 ###
   END server routine
 ###
 model = require('./js/model.js') # loading common model for game
 
-players = {}
-#enemies = {}
 Ws = new model.World()
-s = "xaxa"
 io.sockets.on('connection', (socket) ->
-  #Player
+
+#PLAYER
   socket.on('add user', (pl) ->
-    pl.name = pl.name + Ws.count
-    pl.number = Ws.count
-    socket.emit('change name',pl.name)
+    pl.name = pl.name + Ws.countP
+    pl.number = Ws.countP
+    socket.emit('change yourself',pl)
     Ws.AddPlayer(pl)
     socket.emit('Shut Up And Take My World', Ws)
     #players[player.name] = new model.Player(player.name, player.x, player.y)
     socket.broadcast.emit('user have been added', pl )
-            )
+  )
 
   socket.on('change user', (pl) ->
-            Ws.ChangePlayer(pl)
-            socket.broadcast.emit('user have been changed', pl)
-           )
+    Ws.ChangePlayer(pl)
+    socket.broadcast.emit('user have been changed', pl)
+  )
+
+  socket.on('user died',(pl)->
+     Ws.ChangePlayer(pl)
+     socket.broadcast.emit('delete user', pl)
+  )
+
+#BULLET
+  socket.on('add bullet',(pl)->
+    Ws.ChangePlayer(pl)
+    socket.broadcast.emit('bullet have been added',pl)
+  )
+
+  socket.on('change bullet',(me)->
+      Ws.ChangePlayer(pl)
+      socket.broadcast.emit('bullet have been added',pl)
+   )
+
   #Enemy
    ###
   socket.on('add enemy', (enemy) ->
