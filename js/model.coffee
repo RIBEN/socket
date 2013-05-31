@@ -40,6 +40,7 @@ class Player
     switch typeof obj
       when 'string'
         @name = obj
+        @number=obj
         @x = obj.x
         @y = obj.y
         @ml = @array[@i]
@@ -62,7 +63,7 @@ class Player
       when 'undefined'
         @Bullets = []
         @countB = 0
-        @g = Math.ceil(Math.random() *7)
+        @g = Math.ceil(Math.random() *16)
         @unit=@arrayenemy[@g]
 
         @number = 0
@@ -92,13 +93,13 @@ class Player
     if v is 0
       """
       <div class='main'>
-        <div id='#{@name}' class='player'>
-          <div class='topblock'>#{@mu}</div>
-          <div class='leftblock'>#{@ml}</div>
-          <div class='centerblock'>#{@unit}</div>
-          <div class='rightblock'>#{@mr}</div>
-          <div class='bottomblock'>#{@md}</div>
-        </div>
+      <div id='#{@name}' class='player'>
+      <div class='topblock'>#{@mu}</div>
+      <div class='leftblock'>#{@ml}</div>
+      <div class='centerblock'>#{@unit}</div>
+      <div class='rightblock'>#{@mr}</div>
+      <div class='bottomblock'>#{@md}</div>
+      </div>
       </div>
       """
 
@@ -106,33 +107,30 @@ class Player
 
       """
       <div class='main'>
-        <div id='#{@name}' class='player'>
-          <div class='topblock'>#{@mu}</div>
-          <div class='leftblock'>#{@ml}</div>
-          <div class='centerblock'>#{@unit}</div>
-          <div class='rightblock'>#{@mr}</div>
-          <div class='bottomblock'>#{@md}</div>
-        </div>
+      <div id='#{@name}' class='player'>
+      <div class='topblock'>#{@mu}</div>
+      <div class='leftblock'>#{@ml}</div>
+      <div class='centerblock'>#{@unit}</div>
+      <div class='rightblock'>#{@mr}</div>
+      <div class='bottomblock'>#{@md}</div>
+      </div>
       </div>
       """
 
-
-
   MoveTo: (v) ->
-    @n = 60
     switch v
       when 1
-        @x-=@n
-        console.log @number + "toLeft "+ @x+" "+@y
+        @x-=60
+        console.log "toLeft "+ @x+" "+@y
       when 3
-        @x+=@n
-        console.log @number + "toRight "+ @x+" "+@y
+        @x+=60
+        console.log "toRight "+ @x+" "+@y
       when 2
-        @y-=@n
-        console.log @number + "toUp "+ @x+" "+@y
+        @y-=20
+        console.log "toUp "+ @x+" "+ @y
       when 4
-        @y+=@n
-        console.log @number + "toDown "+ @x+" "+@y
+        @y+=20
+        console.log "toDown "+ @x+" "+ @y
       else console.log "Fig"
 
 ###
@@ -164,17 +162,7 @@ class Word
         if char != W.str.charAt(W.i)
           W.i=0
   addEventListener:(Name, callbackFunc) ->
-     @words[Name].func = callbackFunc
-
-class Point
-   constructor:(x1,y1,n)->
-     @name="Point_"+n
-     @x=x1
-     @y=y1
-     @number=n
-   html:()->
-      "<div id='#{@number}' class='point' style='background: rgb(#{255},#{0},#{0})'>#{@number}</div>"
-
+    @words[Name].func = callbackFunc
 
 class Bullet
   constructor: (obj) ->
@@ -183,8 +171,8 @@ class Bullet
       @number = obj.countB
       @name = "B_#{@cr}_#{@number}"
 
-      @x = obj.x
-      @y = obj.y
+      @x = obj.x + $('#'+obj.name).outerWidth()/2
+      @y = obj.y + $('#'+obj.name).outerHeight()/2
     else
       @cr = obj.cr
       @name = obj.name
@@ -219,10 +207,10 @@ module?.exports =
   World  : World
   Word   : Word
   Bullet : Bullet
-  Point : Point
 window?.Player = Player
 #window?.Enemy = Enemy
 window?.World = World
 window?.Word = Word
 window?.Bullet = Bullet
-window?.Point = Point
+
+
